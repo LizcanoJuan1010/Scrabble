@@ -1,30 +1,42 @@
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
+#include <sstream>
 using namespace std;
 
-int main(int argc, char* argv[]){
+int main(){
     system("color 02");
-    cout << "La versión de C++ es: " << __cplusplus << std::endl;
-  cout<<"Ingrese linea de comando:\n";
+  cout<<"c:/Ingrese_linea_de_comando:>\n";
   string linea;
   char line[15];
+  vector<string> sentence;
+  string word;
   do{
   cin.getline(line,15);
-  cout<<line;
+  cout<<"PS C:/Users/>";
   //configuracion del juego
-  if(line=="inicializar diccionario.txt"){}
-  if(line=="iniciar_inverso diccionario.txt"){}
-  if(line=="puntaje palabra"){}
-  if(line=="salir"){}
-  if(line=="XD"){cout<<"No negro";  }
+  istringstream isstream(line);
+  sentence.clear();
+  while(isstream>>word)
+  sentence.push_back(word);
+
+  if(sentence[0]=="inicializar"){cout<<sentence[1];}
+  else if(sentence[0]=="iniciar_inverso"){}
+  else if(sentence[0]=="puntaje palabra"){}
+  else if(sentence[0]=="Salir"){}
+
   //Busqueda de palabra
-  if(line=="iniciar_arbol diccionario.txt"){}
-  if(line=="iniciar_arbol_inverso diccionario.txt"){}
-  if(line=="palabras_por_prefijo prefijo"){}
-  if(line=="palabras_por_sufijo sufijo"){}
+  else if(sentence[0]=="iniciar_arbol"){}
+  else if(sentence[0]=="iniciar_arbol_inverso"){}
+  else if(sentence[0]=="palabras_por_prefijo"){}
+  else if(sentence[0]=="palabras_por_sufijo"){}
   //combinaciones de letra
-  if(line=="grafo_de_palabras"){}  
-  if(line=="posibles_palabras letras"){} 
-  }while(line=="Salir");
+  else if(sentence[0]=="grafo_de_palabras"){}  
+  else if(sentence[0]=="posibles_palabras"){} 
+  else{
+    cout<<"Lo que dijito no es valido\n";
+  }
+  sentence.clear();
+  }while(sentence[0]!="Salir");
     return 0;
 }
