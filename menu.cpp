@@ -4,39 +4,100 @@
 #include <sstream>
 using namespace std;
 
-int main(){
-    system("color 02");
-  cout<<"c:/Ingrese_linea_de_comando:>\n";
-  string linea;
-  char line[15];
-  vector<string> sentence;
-  string word;
+
+void menu();
+void menudeljuego();
+void opciones(int opcion);
+
+void ListadeAyudas();
+
+int main(int argc, char *argv[]) {
+
+  int opcion = 0;
   do{
-  cin.getline(line,15);
-  cout<<"PS C:/Users/>";
-  //configuracion del juego
-  istringstream isstream(line);
-  sentence.clear();
-  while(isstream>>word)
-  sentence.push_back(word);
+    menu();
+    cout<<"PS C:/Users/> $";
+    cin>> opcion;
 
-  if(sentence[0]=="inicializar"){cout<<sentence[1];}
-  else if(sentence[0]=="iniciar_inverso"){}
-  else if(sentence[0]=="puntaje palabra"){}
-  else if(sentence[0]=="Salir"){}
+  opciones(opcion);
 
-  //Busqueda de palabra
-  else if(sentence[0]=="iniciar_arbol"){}
-  else if(sentence[0]=="iniciar_arbol_inverso"){}
-  else if(sentence[0]=="palabras_por_prefijo"){}
-  else if(sentence[0]=="palabras_por_sufijo"){}
-  //combinaciones de letra
-  else if(sentence[0]=="grafo_de_palabras"){}  
-  else if(sentence[0]=="posibles_palabras"){} 
-  else{
-    cout<<"Lo que dijito no es valido\n";
-  }
-  sentence.clear();
-  }while(sentence[0]!="Salir");
+  }while(opcion !=3);
     return 0;
 }
+
+
+void menu(){
+  
+  cout<<"---------Scrabble---------"<< endl;
+  cout<<"1)Jugar"<< endl;
+  cout<<"2) Ayuda"<< endl;
+  cout<<"3) Salir" << endl;
+  cout<<"---------------------------"<< endl;
+}
+
+void opciones(int opcion){
+    switch (opcion)
+    {
+    case 1:
+      menudeljuego();
+      break;
+    
+    case 2:
+      ListadeAyudas();
+      break;
+      
+    case 3:
+
+      cout<<"Vuela Pronto!!"<<endl;
+      break;
+    
+    default:
+    cout<< "Opcion no Valida. Intentelo nuevamente" << endl;
+      break;
+    }
+}
+
+ void menudeljuego() {
+    string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol", "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo", "grafo_de_palabras", "posibles_palabras"};
+    string input_usuario;
+    
+    cout << "Ingrese un comando: ";
+    getline(cin, input_usuario);
+
+    istringstream isstream(input_usuario);
+    string comando;
+    
+    // Extrae el primer token (comando) de la línea de entrada
+    isstream >> comando;
+
+    bool existe = false;
+
+    for (int i = 0; i < 10; i++) {
+        if (comandos[i] == comando) {
+            existe = true;
+
+            // Aquí puedes agregar el código correspondiente al comando encontrado
+
+            // Ahora verifica si hay argumentos adicionales y procesa según sea necesario
+            string argumento;
+            while (isstream >> argumento) {
+                // Procesa los argumentos adicionales aquí
+                cout << "Argumento adicional: " << argumento << endl;
+            }
+
+            break; // Termina el bucle si encuentra el comando
+        }
+    }
+
+    if (!existe) {
+        cout << "Comando no reconocido. Inténtalo de nuevo." << endl;
+    }
+}
+      
+
+ 
+
+ void ListadeAyudas(){
+
+   cout<< "Ayuda" << endl;
+ }
