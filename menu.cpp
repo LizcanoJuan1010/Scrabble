@@ -34,7 +34,24 @@ void inicializarFuncion(const string& argumento) {
 }
 
 void iniciarInversoFuncion(const string& argumento) {
-    cout << "Hola desde la funcion iniciar_inverso" << endl;
+     ifstream archivoEntrada(argumento);
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivoEntrada.is_open()) {
+       
+        string palabra;
+
+        while (getline(archivoEntrada, palabra))
+        {
+            cout << palabra << endl;
+        }
+        
+        
+        archivoEntrada.close();
+         cout << " El diccionario se ha inicializado correctamente" << endl;
+    } else {
+        cout << " El archivo diccionario.txt no existe o no puede ser leído." << endl;
+    }
 }
 
 void puntajeFuncion(const string& argumento) {
