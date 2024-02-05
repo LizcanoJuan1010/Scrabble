@@ -1,86 +1,103 @@
 #include <iostream>
-#include <stdlib.h>
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <unordered_map>
+#include <functional>
+#include <cstdlib>
 using namespace std;
 
 
-void Comandos(string auxilar,string argumento);
+
+void inicializarFuncion(const string& argumento) {
+  cout << "Hola desde la funcion inicializar" << endl;
+
+  cout << argumento << endl;
+}
+
+void iniciarInversoFuncion(const string& argumento) {
+    cout << "Hola desde la funcion iniciar_inverso" << endl;
+}
+
+void puntajeFuncion(const string& argumento) {
+   
+}
+
+void exitfuncion(const string& argumento) {
+
+    exit(0);
+}
+
+void iniciararbolFuncion(const string& argumento) {
+  
+}
+
+void iniciararbolinversoFuncion(const string& argumento) {
+  
+}
+
+void palabrasporprefijoFuncion(const string& argumento) {
+  
+}
+
+void palabrasporsufijoFuncion(const string& argumento) {
+  
+}
+
+void grafodepalabrasFuncion(const string& argumento) {
+  
+}
+
+void posiblespalabrasFuncion(const string& argumento) {
+  
+}
 
 int main(int argc, char *argv[]) {
+    string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
+                           "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
+                           "grafo_de_palabras", "posibles_palabras"};
 
-string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol", 
-"iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo", "grafo_de_palabras", 
-"posibles_palabras"};
     string input_usuario;
-    
-    cout << "Ingrese un comando: ";
-    getline(cin, input_usuario);
 
-    istringstream isstream(input_usuario);
-    string comando;
-    
-    // Extrae el primer token (comando) de la línea de entrada
-    isstream >> comando;
+    while (true) {
+        cout << "$ ";
+        getline(cin, input_usuario);
 
-    bool existe = false;
+        istringstream isstream(input_usuario);
+        string comando;
 
+        // Extrae el primer token (comando) de la línea de entrada
+        isstream >> comando;
 
-    for (int i = 0; i < 10; i++) {
-        if (comandos[i] == comando) {
-            existe = true;
-            
-            string auxilar = comandos[i];
+        unordered_map<string, function<void(const string&)>> funciones = {
+            {"inicializar", inicializarFuncion},
+            {"iniciar_inverso", iniciarInversoFuncion},
+            {"puntaje", puntajeFuncion},
+            {"iniciar_arbol", iniciararbolFuncion},
+            {"iniciar_arbol_inverso", iniciararbolinversoFuncion},
+            {"palabras_por_prefijo", palabrasporprefijoFuncion},
+            {"palabras_por_sufijo", palabrasporsufijoFuncion},
+            {"grafo_de_palabras", grafodepalabrasFuncion},
+            {"posibles_palabras", posiblespalabrasFuncion}
+        };
+
+         auto it = funciones.find(comando);
+        if (it != funciones.end()) {
             string argumento;
-           
             while (isstream >> argumento) {
-                
+                it->second(argumento);
             }
-
-             Comandos(auxilar, argumento);
-
-            break; // Termina el bucle si encuentra el comando
+        } else {
+            cout << "Comando no reconocido. Inténtalo de nuevo." << endl;
         }
-    }
 
-    if (!existe) {
-        cout << "Comando no reconocido. Inténtalo de nuevo." << endl;
-    }
-
-}
-
-void Comandos(string auxilar,string argumento){
-
-    if(auxilar == "inicializar"){
+        if (comando == "salir")
+        {
+          break;
+        }
         
-    }else if (auxilar == "iniciar_inverso")
-    {
-      /* code */
-    }else if (auxilar == "puntaje")
-    {
-      /* code */
-    } else if (auxilar == "salir")
-    {
-      /* code */
-    } else if (auxilar == "iniciar_arbol")
-    {
-      /* code */
-    } else if (auxilar == "iniciar_arbol_inverso")
-    {
-      /* code */
-    } else if (auxilar == "palabras_por_prefijo")
-    {
-      /* code */
-    } else if (auxilar == "palabras_por_sufijo")
-    {
-      /* code */
-    } else if (auxilar == "grafo_de_palabras")
-    {
-      /* code */
-    } else if (auxilar == "posibles_palabras")
-    {
-      /* code */
     }
+
+    return 0;
 }
+
