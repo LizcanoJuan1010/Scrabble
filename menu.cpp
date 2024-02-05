@@ -10,9 +10,27 @@ using namespace std;
 
 
 void inicializarFuncion(const string& argumento) {
-  cout << "Hola desde la funcion inicializar" << endl;
 
-  cout << argumento << endl;
+
+    ifstream archivoEntrada(argumento);
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivoEntrada.is_open()) {
+       
+        string palabra;
+
+        while (getline(archivoEntrada, palabra))
+        {
+            cout << palabra << endl;
+        }
+        
+        
+        archivoEntrada.close();
+         cout << " El diccionario se ha inicializado correctamente" << endl;
+    } else {
+        cout << " El archivo diccionario.txt no existe o no puede ser leído." << endl;
+    }
+
 }
 
 void iniciarInversoFuncion(const string& argumento) {
@@ -88,7 +106,7 @@ int main(int argc, char *argv[]) {
                 it->second(argumento);
             }
         } else {
-            cout << "Comando no reconocido. Inténtalo de nuevo." << endl;
+          
         }
 
         if (comando == "salir")
