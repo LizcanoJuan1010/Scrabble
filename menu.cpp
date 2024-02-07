@@ -1,77 +1,138 @@
 #include <iostream>
-#include <cstdlib>  // Para usar funciones
 #include <vector>
 #include <sstream>
-#include <fstream>  // para usar archivos
-
+#include <fstream>
+#include <unordered_map>
+#include <functional>
+#include <cstdlib>
 using namespace std;
 
-bool arbolInicializado = false; // árbol del diccionario inicializado
-bool diccionarioInversoInicializado = false; // diccionario inverso inicializado
-bool grafoDePalabrasInicializado = false; // grafo de palabras inicializado
 
 
-void mostrarAyuda() {
-    cout << "Comandos disponibles:" << endl
-         << "iniciar inverso diccionario.txt - Inicia el diccionario inverso con el archivo especificado." << endl
-         << "puntaje palabra - Calcula el puntaje de una palabra según las reglas de Scrabble." << endl
-         << "palabras por prefijo [prefijo] - Muestra palabras que comienzan con el prefijo dado." << endl
-         << "palabras por sufijo [sufijo] - Muestra palabras que terminan con el sufijo dado." << endl
-         << "posibles palabras [letras] - Muestra posibles palabras a construir con las letras dadas." << endl
-         << "grafo de palabras - Construye un grafo de palabras basado en el diccionario." << endl
-         << "ayuda - Muestra este menú de ayuda." << endl
-         << "salir - Termina la ejecución del programa." << endl;
-}
+void inicializarFuncion(const string& argumento) {
 
-void mostrarAyudaComando(const string& comando) {
-    cout << "Ayuda para el comando: " << comando << endl;
-}
 
-int main(){
-    cout << "Bienvenid@ al sistema de apoyo de Scrabble" << endl;
-    mostrarAyuda();
+    ifstream archivoEntrada(argumento);
 
-    string linea;
-    char line[256];
-    vector<string> comandos;
-    string palabras;
-    do{
-        cout << "$ ";
-        cin.getline(line, 256);
-        istringstream isstream(line);
-        comandos.clear();
-        while(isstream >> palabras)
-            comandos.push_back(palabras);
+    // Verifica si el archivo se abrió correctamente
+    if (archivoEntrada.is_open()) {
+       
+        string palabra;
 
-        if(comandos.empty()) continue; // Si no se ingresa nada continúa.
-
-        if(comandos[0] == "ayuda") {
-            if(comandos.size() == 1) {
-                mostrarAyuda();
-            } else {
-                mostrarAyudaComando(comandos[1]);
-            }
-        } else if(comandos[0] == "salir") {
-            break; // Finaliza el programa.
-        } else if(comandos[0] == "iniciar" && comandos.size() > 2 && comandos[1] == "inverso") {
-            cout << "Iniciando diccionario inverso con el archivo: " << comandos[2] << endl;
-        } else if(comandos[0] == "puntaje" && comandos.size() > 1) {
-            cout << "Calculando puntaje para la palabra: " << comandos[1] << endl;
-        } else if(comandos[0] == "palabras" && comandos.size() > 3) {
-            if(comandos[1] == "por" && comandos[2] == "prefijo") {
-                cout << "Buscando palabras por prefijo: " << comandos[3] << endl;
-            } else if(comandos[1] == "por" && comandos[2] == "sufijo") {
-                cout << "Buscando palabras por sufijo: " << comandos[3] << endl;
-            }
-        } else if(comandos[0] == "posibles" && comandos.size() > 2 && comandos[1] == "palabras") {
-            cout << "Buscando posibles palabras con las letras: " << comandos[2] << endl;
-        } else if(comandos[0] == "grafo" && comandos.size() > 2 && comandos[1] == "de" && comandos[2] == "palabras") {
-            cout << "Construyendo grafo de palabras." << endl;
-        } else {
-            cout << "Comando incorrecto o faltan argumentos." << endl;
-            mostrarAyudaComando(comandos[0]);
+        while (getline(archivoEntrada, palabra))
+        {
+            cout << palabra << endl;
         }
-    } while(true);
+        
+        
+        archivoEntrada.close();
+         cout << " El diccionario se ha inicializado correctamente" << endl;
+    } else {
+        cout << " El archivo diccionario.txt no existe o no puede ser leído." << endl;
+    }
+
+}
+
+void iniciarInversoFuncion(const string& argumento) {
+     ifstream archivoEntrada(argumento);
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivoEntrada.is_open()) {
+       
+        string palabra;
+
+        while (getline(archivoEntrada, palabra))
+        {
+            cout << palabra << endl;
+        }
+        
+        
+        archivoEntrada.close();
+         cout << " El diccionario se ha inicializado correctamente" << endl;
+    } else {
+        cout << " El archivo diccionario.txt no existe o no puede ser leído." << endl;
+    }
+}
+
+void puntajeFuncion(const string& argumento) {
+   
+}
+
+void exitfuncion(const string& argumento) {
+
+    exit(0);
+}
+
+void iniciararbolFuncion(const string& argumento) {
+  
+}
+
+void iniciararbolinversoFuncion(const string& argumento) {
+  
+}
+
+void palabrasporprefijoFuncion(const string& argumento) {
+  
+}
+
+void palabrasporsufijoFuncion(const string& argumento) {
+  
+}
+
+void grafodepalabrasFuncion(const string& argumento) {
+  
+}
+
+void posiblespalabrasFuncion(const string& argumento) {
+  
+}
+
+int main(int argc, char *argv[]) {
+    string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
+                           "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
+                           "grafo_de_palabras", "posibles_palabras"};
+
+    string input_usuario;
+
+    while (true) {
+        cout << "$ ";
+        getline(cin, input_usuario);
+
+        istringstream isstream(input_usuario);
+        string comando;
+
+        // Extrae el primer token (comando) de la línea de entrada
+        isstream >> comando;
+
+        unordered_map<string, function<void(const string&)>> funciones = {
+            {"inicializar", inicializarFuncion},
+            {"iniciar_inverso", iniciarInversoFuncion},
+            {"puntaje", puntajeFuncion},
+            {"iniciar_arbol", iniciararbolFuncion},
+            {"iniciar_arbol_inverso", iniciararbolinversoFuncion},
+            {"palabras_por_prefijo", palabrasporprefijoFuncion},
+            {"palabras_por_sufijo", palabrasporsufijoFuncion},
+            {"grafo_de_palabras", grafodepalabrasFuncion},
+            {"posibles_palabras", posiblespalabrasFuncion}
+        };
+
+         auto it = funciones.find(comando);
+        if (it != funciones.end()) {
+            string argumento;
+            while (isstream >> argumento) {
+                it->second(argumento);
+            }
+        } else {
+          
+        }
+
+        if (comando == "salir")
+        {
+          break;
+        }
+        
+    }
 
     return 0;
 }
+
