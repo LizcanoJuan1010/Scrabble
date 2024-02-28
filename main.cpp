@@ -4,7 +4,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <cctype> 
-#include "Scrabble.cpp"
+#include "ScrabbleFirmas.h"
 using namespace std;
 int main(int argc, char *argv[])
 {
@@ -85,6 +85,14 @@ int main(int argc, char *argv[])
             }else
             posiblespalabrasFuncion(argumento);
         }
+        else if (comando=="ayuda")
+        {
+            if(argumento.empty()){
+                 mostrarMenuAyuda();
+            }else
+            ayuda(argumento);
+        }
+    
         else if(comando=="salir"){
                 cout<<"\n";
         }else
