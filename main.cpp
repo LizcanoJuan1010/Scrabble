@@ -2,10 +2,9 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
-#include <unordered_map>
-#include <functional>
 #include <cstdlib>
-#include "Scrabble.cpp"
+#include <cctype> 
+#include "ScrabbleFirmas.h"
 using namespace std;
 int main(int argc, char *argv[])
 {
@@ -16,10 +15,11 @@ int main(int argc, char *argv[])
 
     string input_usuario;
     vector<string> diccionario;
+    vector<string> diccionarioInv;
     string comando;
     do
     {
-        cout << "PS C:/Users/> $ ";
+        cout << " $ ";
         getline(cin, input_usuario);
 
         istringstream isstream(input_usuario);
@@ -32,41 +32,70 @@ int main(int argc, char *argv[])
 
         if (comando == "inicializar")
         {
+            if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else            
             inicializarFuncion(argumento, diccionario);
         }
         else if (comando == "iniciar_inverso")
-        {
-            iniciarInversoFuncion(argumento);
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
+            iniciarInversoFuncion(argumento,diccionarioInv);
         }
         else if (comando == "puntaje")
-        {
-            puntajeFuncion(argumento, diccionario);
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
+            puntajeFuncion(argumento, diccionario,diccionarioInv);
         }
         else if (comando == "iniciar_arbol")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             iniciararbolFuncion(argumento);
         }
         else if (comando == "iniciar_arbol_inverso")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             iniciararbolinversoFuncion(argumento);
         }
         else if (comando == "palabras_por_prefijo")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             palabrasporprefijoFuncion(argumento, diccionario);
         }
         else if (comando == "palabras_por_sufijo")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             palabrasporsufijoFuncion(argumento, diccionario);
         }
         else if (comando == "grafo_de_palabras")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             grafodepalabrasFuncion(argumento);
         }
         else if (comando == "posibles_palabras")
-        {
+        {   if(argumento.empty()){
+                cout<<"No hay argumento para poder inializar\n";
+            }else
             posiblespalabrasFuncion(argumento);
         }
-        else
+        else if (comando=="ayuda")
+        {
+            if(argumento.empty()){
+                 mostrarMenuAyuda();
+            }else
+            ayuda(argumento);
+        }
+    
+        else if(comando=="salir"){
+                cout<<"\n";
+        }else
         {
             cout << "Comando inexistente\n";
         };
