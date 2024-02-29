@@ -1,2 +1,2 @@
-holafrio,,chao
-adios,
+hola,frio,chao
+adios,comando
