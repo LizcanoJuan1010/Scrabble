@@ -6,32 +6,26 @@
 #include <functional>
 #include <cstdlib>
 #include <cctype> 
+#include "ScrabbleFirmas.h"
 using namespace std;
 
 
 
-void inicializarFuncion(const string& argumento,vector<string>& diccionario) {
+void inicializarFuncion(const string& filepath,Dictionary& dictionary) {
 
-
-    ifstream archivoEntrada(argumento);
-
-    // Verifica si el archivo se abrió correctamente
-    if (archivoEntrada.is_open()) {
-       
-        string palabra;
-
-        while (getline(archivoEntrada, palabra))
-        {
-            diccionario.push_back (palabra);
-        }
-        
-        
-        archivoEntrada.close();
-         cout << " El diccionario se ha inicializado correctamente" << endl;
-    } else {
-        cout << " El archivo diccionario.txt no existe o no puede ser leído." << endl;
+    ifstream file(filepath);
+    if (!file) {
+        //toca mostrar en pantalla que no funciona pero sin cout, con loggers eso dijo el profe
+        return;
     }
 
+    std::string line;
+    bool anywordadded = false; // Flag to indicate if any word was added to the dictionary
+
+    while (std::getline(file, line)) {
+        std::stringstream lineStream(line); // Create a stringstream from the line
+        std:: string wordtext;
+    }
 }
 
 void iniciarInversoFuncion(const string& argumento) {

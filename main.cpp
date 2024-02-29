@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     string comando;
     do
     {
-        cout << "PS C:/Users/> $ ";
+        cout << "$";
         getline(cin, input_usuario);
 
         istringstream isstream(input_usuario);

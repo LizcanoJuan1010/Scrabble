@@ -4,8 +4,11 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <dictionary.h>
 
-void inicializarFuncion(const std::string& argumento, const std::vector<std::string>& diccionario);
+
+
+void inicializarFuncion(const std::string& filepath, Dictionary& dictionary);
 void iniciarInversoFuncion(const std::string& argumento);
 void puntajeFuncion(const std::string& argumento, const std::vector<std::string>& diccionario);
 void exitfuncion(const std::string& argumento);
