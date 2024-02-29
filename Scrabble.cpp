@@ -7,10 +7,15 @@
 #include <cstdlib>
 #include <cctype> 
 #include <algorithm>
-#include "ScrabbleFirmas.h"
+#include "Scrabble.h"
 using namespace std;
 
-std::unordered_map<char, int> letterValues = {
+
+    Scrabble::Scrabble() {
+    
+    }
+
+    std::unordered_map<char, int> letterValues = {
     {'E', 1}, {'A', 1}, {'I', 1}, {'O', 1}, {'N', 1}, {'R', 1}, {'T', 1}, {'L', 1}, {'S', 1}, {'U', 1},
     {'D', 2}, {'G', 2},
     {'B', 3}, {'C', 3}, {'M', 3}, {'P', 3},
@@ -20,13 +25,14 @@ std::unordered_map<char, int> letterValues = {
     {'Q', 10}, {'Z', 10}
 };
 
-int getLetterValue(char letter) {
+int Scrabble::getLetterValue(char letter) {
    // Convertir a mayúscula para manejar uniformemente minúsculas y mayúsculas
     letter = std::toupper(letter);
 
     // Buscar la letra en el mapa y devolver su valor.
     auto it = letterValues.find(letter);
     if (it != letterValues.end()) {
+        cout << "Value: " << it->second << endl;
         return it->second;
     }
 
@@ -34,15 +40,16 @@ int getLetterValue(char letter) {
     return 0;
 }
 
-void inicializarFuncion(const string& filepath,Dictionary& dictionary) {
+void Scrabble::inicializarFuncion(const string& filepath,Dictionary& dictionary) {
 
     ifstream file(filepath);
-    if (!file) {
-        //toca mostrar en pantalla que no funciona pero sin cout, con loggers eso dijo el profe
+    if (!file.is_open()) {
+        cout << "File not found." << endl;
         return;
     }
 
     std::string line;
+
     bool anywordadded = false; // Flag to indicate if any word was added to the dictionary
 
     while (std::getline(file, line)) {
@@ -55,7 +62,8 @@ void inicializarFuncion(const string& filepath,Dictionary& dictionary) {
 
             if (!wordtext.empty()) {
                 Word word;
-                for (char c : wordtext) {
+                std::vector<char> letters(wordtext.begin(), wordtext.end());
+                for (char c : letters) {
                     if (c != '-') {
                         int value = getLetterValue(c); // Usa la función para obtener el valor de la letra.
                         Letter letter(c, value);
@@ -65,14 +73,16 @@ void inicializarFuncion(const string& filepath,Dictionary& dictionary) {
                 }
                 dictionary.addWord(word);
                 anywordadded = true;
+                
             }
         }
     }
         
+       dictionary.printWords(); 
     }
 
 
-void iniciarInversoFuncion(const std::string& filePath, Dictionary& dictionary) {
+void Scrabble::iniciarInversoFuncion(const std::string& filePath, Dictionary& dictionary) {
     std::ifstream file(filePath);
     std::string line;
     bool anywordadded = false;
@@ -100,137 +110,15 @@ void iniciarInversoFuncion(const std::string& filePath, Dictionary& dictionary) 
                 for (char c : wordText) {
                     int value = getLetterValue(c); // Asume que esta función retorna el valor correcto de cada letra
                     word.addLetter(Letter(c, value));
+                    
                 }
                 dictionary.addinverseWords(word);
                 anywordadded = true;
-
+                
             }
             
         }
         
     }
- 
- 
-  
-}
-
-void puntajeFuncion(const string& argumento, vector<string>& diccionario) {
-    bool palabraEnDiccionario = false;
-    for (const auto& palabraDic : diccionario) {
-        if (palabraDic == argumento) {
-            palabraEnDiccionario = true;
-            break;  // No es necesario continuar verificando el diccionario si ya encontramos la palabra
-        }
-    }
-
-    if (!palabraEnDiccionario) {
-        cout << "La palabra no existe en el diccionario" << endl;
-    } else {
-        for (char c : argumento) {
-            // Verifica si el carácter no es una letra o un espacio en blanco
-            if (!isalpha(c) && !isspace(c)) {
-                cout << "La palabra contiene símbolos inválidos" << endl;
-                return;  // Sale de la función si se encuentra un carácter inválido
-            }
-        }
-
-        // Si no se encontraron caracteres inválidos, imprime el mensaje de puntaje
-       cout << "La palabra tiene un puntaje de puntaje" <<endl;
-    }
-}
-
-
-void exitfuncion(const string& argumento) {
-
-    exit(0);
-}
-
-void iniciararbolFuncion(const string& argumento) {
-    ifstream archivoEntrada(argumento);
-
-    // Verifica si el archivo se abrió correctamente
-    if (archivoEntrada.is_open()) {
-       
-        string palabra;
-
-        while (getline(archivoEntrada, palabra))
-        {
-           
-        }
-        
-        
-        archivoEntrada.close();
-         cout << " El árbol del diccionario ya ha sido inicializado.\n" << endl;
-    } else {
-        cout << " El archivo diccionario.txt no existe o no puede ser leído.\n" << endl;
-    }
-  
-}
-
-void iniciararbolinversoFuncion(const string& argumento) {
-      ifstream archivoEntrada(argumento);
-     vector<string> palabras;
-    // Verifica si el archivo se abrió correctamente
-    if (archivoEntrada.is_open()) {
-       string palabra;
-        while (getline(archivoEntrada, palabra)) {
-            palabras.push_back(palabra);
-        }
-        archivoEntrada.close();
-    
-         cout << " El árbol del diccionario inverso se ha inicializado correctamente.\n" << endl;
-    } else {
-        cerr << " El archivo diccionario.txt no existe o no puede ser leído.\n" << endl;
-    }
-}
-
-void palabrasporprefijoFuncion(const string& argumento, vector<string>& diccionario) {
- 
-    bool existepref;
-    int contador=0;
-    // Utiliza la función find para buscar la parte en la palabra
-    for (const auto& palabraDic : diccionario) {
-        existepref=false;
-      existepref= palabraDic.find(argumento) == 0;
-    if(existepref)
-    contador++;
-       }
-       if(contador==0){
-        cout<<"Prefijo prefijo no pudo encontrarse en el diccionario.\n";
-       }else{
-        cout<<"Las palabras que inician con este prefijo son:\n";
-       }
-
-}
-
-void palabrasporsufijoFuncion(const string& argumento, vector<string>& diccionario) {
-   bool existesuf;
-    int contador=0;
-    // Utiliza la función find para buscar la parte en la palabra
-    for (const auto& palabraDic : diccionario) {
-        existesuf=false;
-        size_t posicion = palabraDic.rfind(argumento);
-      existesuf= posicion != string::npos && posicion == palabraDic.length() - argumento.length();//string::npos para cosas no enconradas o invalidas
-    if(existesuf)
-    contador++;
-       }
-       if(contador==0){
-        cout<<" Sufijo sufijo no pudo encontrarse en el diccionario.\n";
-       }else{
-        cout<<"Las palabras que terminan con este sufijo son:\n";
-       }
-}
-
-void grafodepalabrasFuncion(const string& argumento) {
-  cout<<"Grafo construído correctamente.\n";
-}
-
-void posiblespalabrasFuncion(const string& argumento) {
-  for (char c : argumento) {
-            // Verifica si el carácter no es una letra o un espacio en blanco
-            if (!isalpha(c) && !isspace(c)) {
-                cout << "La cadena letras contiene símbolos inválidos" << endl;
-                return;  // Sale de la función si se encuentra un carácter inválido
-            }
-} cout<<"Las posibles palabras a construir con las letras letras son:\n";
+  dictionary.printInverseWords();
 }

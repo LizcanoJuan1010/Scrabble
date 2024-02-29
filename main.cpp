@@ -5,17 +5,19 @@
 #include <unordered_map>
 #include <functional>
 #include <cstdlib>
-#include "Scrabble.cpp"
+#include "Scrabble.h"
+#include "Dictionary.h"
 using namespace std;
 int main(int argc, char *argv[])
 {
-    system("color 02");
+   
     string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
                            "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
                            "grafo_de_palabras", "posibles_palabras"};
-
+    Dictionary dictionary;
+    Scrabble scrabble;
     string input_usuario;
-    Dictionary diccionario;
+ 
     string comando;
     do
     {
@@ -26,45 +28,48 @@ int main(int argc, char *argv[])
 
         // Extrae el primer token (comando) de la línea de entrada
         isstream >> comando;
+        cout << "Comando: " << comando << endl;
 
-        string argumento;
-        isstream >> argumento;
+        string filepath;
+        isstream >> filepath;
+        cout << "Argumento: " << filepath << endl;
 
         if (comando == "inicializar")
         {
-            inicializarFuncion(argumento, diccionario);
+            cout << "inicializando" << endl;
+            scrabble.inicializarFuncion(filepath,dictionary);
         }
         else if (comando == "iniciar_inverso")
         {
-            iniciarInversoFuncion(argumento, diccionario);
+            scrabble.inicializarFuncion(filepath,dictionary);
         }
         else if (comando == "puntaje")
         {
-            //puntajeFuncion(argumento, diccionario);
+            //puntajeFuncion(argumento);
         }
         else if (comando == "iniciar_arbol")
         {
-            iniciararbolFuncion(argumento);
+           // iniciararbolFuncion(argumento);
         }
         else if (comando == "iniciar_arbol_inverso")
         {
-            iniciararbolinversoFuncion(argumento);
+           // iniciararbolinversoFuncion(argumento);
         }
         else if (comando == "palabras_por_prefijo")
         {
-           // palabrasporprefijoFuncion(argumento, diccionario);
+           // palabrasporprefijoFuncion(argumento, dictionary);
         }
         else if (comando == "palabras_por_sufijo")
         {
-            //palabrasporsufijoFuncion(argumento, diccionario);
+            //palabrasporsufijoFuncion(argumento, dictionary);
         }
         else if (comando == "grafo_de_palabras")
         {
-            grafodepalabrasFuncion(argumento);
+           // grafodepalabrasFuncion(argumento);
         }
         else if (comando == "posibles_palabras")
         {
-            posiblespalabrasFuncion(argumento);
+            //posiblespalabrasFuncion(argumento);
         }
         else
         {

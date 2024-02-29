@@ -14,6 +14,8 @@ public:
     void addWord(const Word& word);
     void addinverseWords(const Word& word);
     bool IsinverseInitialized() const;
+    void printWords() const; // Nuevo método para imprimir las palabras normales
+    void printInverseWords() const;
    
 };
 
