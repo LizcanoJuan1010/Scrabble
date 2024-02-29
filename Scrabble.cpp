@@ -15,7 +15,7 @@ using namespace std;
     
     }
 
-    std::unordered_map<char, int> letterValues = {
+    unordered_map<char, int> letterValues = {
     {'E', 1}, {'A', 1}, {'I', 1}, {'O', 1}, {'N', 1}, {'R', 1}, {'T', 1}, {'L', 1}, {'S', 1}, {'U', 1},
     {'D', 2}, {'G', 2},
     {'B', 3}, {'C', 3}, {'M', 3}, {'P', 3},
@@ -26,15 +26,90 @@ using namespace std;
 };
 int Scrabble::getLetterValue(char letter) {
    // Convertir a mayúscula para manejar uniformemente minúsculas y mayúsculas
-    letter = std::toupper(letter);
+   /* letter = toupper(letter);
     // Buscar la letra en el mapa y devolver su valor.
-    auto it = letterValues.find(letter);
+    /*auto it = letterValues.find(letter);
+     cout << "Value: " <<it->first << " Score: " << it->second << endl;
     if (it != letterValues.end()) {
-        cout << "Value: " << it->second << endl;
+        cout << "Value: " <<it->first << " Score: " << it->second << endl;
         return it->second;
     }
+    cout << "Value: " <<letterValues[letter] << endl;
+    if (letterValues.find(letter) != letterValues.end()) {
+        cout << "Value: " <<letterValues[letter] << endl;
+        return letterValues[letter];
+    }
+    for (const auto& pair : letterValues) {
+    std::cout << pair.first << " => " << pair.second << '\n';
+    }
+    letter = std::toupper(static_cast<unsigned char>(letter));
 
-    // Si la letra no está en el mapa, podrías devolver 0 o manejar el error como prefieras.
+    cout << "Procesando letra: " << letter << endl; // Debug: muestra la letra procesada
+
+
+    auto it = letterValues.find(letter);
+    if (it != letterValues.end()) {
+        cout << "Valor encontrado para " << it->first << ": " << it->second << endl;
+        return it->second;
+    } else {
+        cout << "Letra " << letter << " no encontrada en el mapa." << endl;
+    }
+*/
+    cout << "Procesando letra: " << letter << endl; // Debug: muestra la letra procesada
+   if (letter == 'A') {
+        return 1;
+    } else if (letter == 'B') {
+        return 3;
+    } else if (letter == 'C') {
+        return 3;
+    } else if (letter == 'D') {
+        return 2;
+    } else if (letter == 'E') {
+        return 1;
+    } else if (letter == 'F') {
+        return 4;
+    } else if (letter == 'G') {
+        return 2;
+    } else if (letter == 'H') {
+        return 4;
+    } else if (letter == 'I') {
+        return 1;
+    } else if (letter == 'J') {
+        return 8;
+    } else if (letter == 'K') {
+        return 5;
+    } else if (letter == 'L') {
+        return 1;
+    } else if (letter == 'M') {
+        return 3;
+    } else if (letter == 'N') {
+        return 1;
+    } else if (letter == 'O') {
+        return 1;
+    } else if (letter == 'P') {
+        return 3;
+    } else if (letter == 'Q') {
+        return 10;
+    } else if (letter == 'R') {
+        return 1;
+    } else if (letter == 'S') {
+        return 1;
+    } else if (letter == 'T') {
+        return 1;
+    } else if (letter == 'U') {
+        return 1;
+    } else if (letter == 'V') {
+        return 4;
+    } else if (letter == 'W') {
+        return 4;
+    } else if (letter == 'X') {
+        return 8;
+    } else if (letter == 'Y') {
+        return 4;
+    } else if (letter == 'Z') {
+        return 10;
+    }
+    // Si la letra no está en las condiciones anteriores, devolver 0
     return 0;
 }
 
@@ -74,6 +149,7 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
                 
             }
         }
+        dictionary.printWords();
     }
         
       
@@ -116,7 +192,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
             }
             
         }
-        
+        dictionary.printInverseWords();
     }
 }
 

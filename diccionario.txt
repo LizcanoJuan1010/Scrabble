@@ -1,2 +1,2 @@
-hola,adios,amor
-salchipapa,ajiaco,espa&cio
+HOLA,ADIOS,AMOR
+SALCHIPAPA,AJIACO,ESPA&CIO
