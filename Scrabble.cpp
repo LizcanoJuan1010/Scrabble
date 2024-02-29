@@ -40,11 +40,11 @@ int Scrabble::getLetterValue(char letter) {
     return 0;
 }
 
-void Scrabble::inicializarFuncion(const string& filepath,Dictionary& dictionary) {
+void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary) {
 
     ifstream file(filepath);
     if (!file.is_open()) {
-        cout << "File not found." << endl;
+        //cout << "File not found." << endl;
         return;
     }
 
@@ -82,13 +82,13 @@ void Scrabble::inicializarFuncion(const string& filepath,Dictionary& dictionary)
     }
 
 
-void Scrabble::iniciarInversoFuncion(const std::string& filePath, Dictionary& dictionary) {
+void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dictionary) {
     std::ifstream file(filePath);
     std::string line;
     bool anywordadded = false;
     if (dictionary.IsinverseInitialized())
      {
-    //sigue que ya esta inicializado
+      cout << "Inverse words already initialized." << endl;
      return;
     }
 
@@ -120,5 +120,20 @@ void Scrabble::iniciarInversoFuncion(const std::string& filePath, Dictionary& di
         }
         
     }
-  dictionary.printInverseWords();
+}
+
+void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
+    if (!std::all_of(palabra.begin(), palabra.end(), [](char c){ return std::isalpha(c); })) {
+        std::cout << "(Letras inválidas) La palabra contiene símbolos inválidos." << std::endl;
+        return;
+    }
+
+    if (!dictionary.wordExists(palabra)) {
+        std::cout << "(Palabra no existe) La palabra no existe en el diccionario." << std::endl;
+        return;
+    }
+
+    // Asumiendo que necesitas encontrar la palabra en el diccionario para obtener su puntaje:
+    int puntaje = dictionary.getWordScore(palabra); // Este es un método hipotético que necesitarías implementar.
+    std::cout << "(Resultado exitoso) La palabra tiene un puntaje de " << puntaje << "." << std::endl;
 }

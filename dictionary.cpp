@@ -1,5 +1,6 @@
 #include "Dictionary.h"
 #include <iostream>
+#include <algorithm>
 Dictionary::Dictionary() {}
 
 void Dictionary::addWord(const Word& word) {
@@ -28,3 +29,21 @@ void Dictionary::printInverseWords() const {
 
 }
 
+bool Dictionary::wordExists(const std::string& word) const {
+    auto wordFinder = [&word](const std::list<Word>& wordList) {
+        return std::find_if(wordList.begin(), wordList.end(), 
+                            [&word](const Word& w) { return w.toString() == word; }) != wordList.end();
+    };
+
+    return wordFinder(words) || wordFinder(inverseWords);
+}
+
+int Dictionary::getWordScore(const std::string& word) const {
+    for (const auto& w : words) {
+        if (w.toString() == word) return w.calculateScore();
+    }
+    for (const auto& w : inverseWords) {
+        if (w.toString() == word) return w.calculateScore();
+    }
+    return 0; // O manejar como veas conveniente si la palabra no se encuentra.
+}

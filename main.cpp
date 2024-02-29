@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     Scrabble scrabble;
     string input_usuario;
  
-    string comando;
+    string command;
     do
     {
         cout << "$";
@@ -27,47 +27,47 @@ int main(int argc, char *argv[])
         istringstream isstream(input_usuario);
 
         // Extrae el primer token (comando) de la línea de entrada
-        isstream >> comando;
-        cout << "Comando: " << comando << endl;
+        isstream >> command;
+        cout << "Comando: " << command << endl;
 
-        string filepath;
-        isstream >> filepath;
-        cout << "Argumento: " << filepath << endl;
+        string argument;
+        isstream >> argument;
+        cout << "Argumento: " << argument << endl;
 
-        if (comando == "inicializar")
+        if (command == "inicializar")
         {
             cout << "inicializando" << endl;
-            scrabble.inicializarFuncion(filepath,dictionary);
+            scrabble.initializeFunction(argument,dictionary);
         }
-        else if (comando == "iniciar_inverso")
+        else if (command == "iniciar_inverso")
         {
-            scrabble.inicializarFuncion(filepath,dictionary);
+            scrabble.startInverseFunction(argument,dictionary);
         }
-        else if (comando == "puntaje")
+        else if (command == "puntaje")
         {
-            //puntajeFuncion(argumento);
+            scrabble.result(argument, dictionary);
         }
-        else if (comando == "iniciar_arbol")
+        else if (command == "iniciar_arbol")
         {
            // iniciararbolFuncion(argumento);
         }
-        else if (comando == "iniciar_arbol_inverso")
+        else if (command == "iniciar_arbol_inverso")
         {
            // iniciararbolinversoFuncion(argumento);
         }
-        else if (comando == "palabras_por_prefijo")
+        else if (command == "palabras_por_prefijo")
         {
            // palabrasporprefijoFuncion(argumento, dictionary);
         }
-        else if (comando == "palabras_por_sufijo")
+        else if (command == "palabras_por_sufijo")
         {
             //palabrasporsufijoFuncion(argumento, dictionary);
         }
-        else if (comando == "grafo_de_palabras")
+        else if (command == "grafo_de_palabras")
         {
            // grafodepalabrasFuncion(argumento);
         }
-        else if (comando == "posibles_palabras")
+        else if (command == "posibles_palabras")
         {
             //posiblespalabrasFuncion(argumento);
         }
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
             cout << "Comando inexistente\n";
         };
 
-    } while (comando != "salir");
+    } while (command != "salir");
 
     return 0;
 }

@@ -16,8 +16,9 @@ public:
      std::unordered_map<char, int> letterValues;
 
     int getLetterValue(char letter);
-    void inicializarFuncion(const std::string& filepath, Dictionary& dictionary);
-    void iniciarInversoFuncion(const std::string& filePath, Dictionary& dictionary);
+    void initializeFunction(const std::string& filepath, Dictionary& dictionary);
+    void startInverseFunction(const std::string& filePath, Dictionary& dictionary);
+    void result(const std::string& palabra, const Dictionary& dictionary) const ;
 };
 
 

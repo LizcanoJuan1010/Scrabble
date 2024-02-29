@@ -16,7 +16,8 @@ public:
     bool IsinverseInitialized() const;
     void printWords() const; // Nuevo método para imprimir las palabras normales
     void printInverseWords() const;
-   
+    bool wordExists(const std::string& word) const;
+    int getWordScore(const std::string& word) const;
 };
 
 #endif // DICTIONARY_H
