@@ -24,7 +24,6 @@ using namespace std;
     {'J', 8}, {'X', 8},
     {'Q', 10}, {'Z', 10}
 };
-
 int Scrabble::getLetterValue(char letter) {
    // Convertir a mayúscula para manejar uniformemente minúsculas y mayúsculas
     letter = std::toupper(letter);

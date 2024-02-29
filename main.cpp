@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
 
         istringstream isstream(input_usuario);
 
-        // Extrae el primer token (comando) de la línea de entrada
+       
         isstream >> command;
-        cout << "Comando: " << command << endl;
+      
 
         string argument;
         isstream >> argument;
-        cout << "Argumento: " << argument << endl;
+       
 
         if (command == "inicializar")
         {
