@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
         if (command == "inicializar")
         {
-            cout << "inicializando" << endl;
+            
             scrabble.initializeFunction(argument,dictionary);
         }
         else if (command == "iniciar_inverso")
@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
         {
             //posiblespalabrasFuncion(argumento);
         }
+        
         else
         {
             cout << "Comando inexistente\n";

@@ -40,10 +40,12 @@ bool Dictionary::wordExists(const std::string& word) const {
 
 int Dictionary::getWordScore(const std::string& word) const {
     for (const auto& w : words) {
-        if (w.toString() == word) return w.calculateScore();
+        if (w.toString() == word) 
+        return w.calculateScore();
     }
     for (const auto& w : inverseWords) {
-        if (w.toString() == word) return w.calculateScore();
+        if (w.toString() == word) 
+        return w.calculateScore();
     }
-    return 0; // O manejar como veas conveniente si la palabra no se encuentra.
+    return 0; 
 }

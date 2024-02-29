@@ -27,7 +27,6 @@ using namespace std;
 int Scrabble::getLetterValue(char letter) {
    // Convertir a mayúscula para manejar uniformemente minúsculas y mayúsculas
     letter = std::toupper(letter);
-
     // Buscar la letra en el mapa y devolver su valor.
     auto it = letterValues.find(letter);
     if (it != letterValues.end()) {
@@ -77,7 +76,7 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
         }
     }
         
-       dictionary.printWords(); 
+      
     }
 
 
@@ -125,7 +124,7 @@ void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) 
 
 
     if (!std::all_of(palabra.begin(), palabra.end(), [](char c){ return std::isalpha(c); })) {
-        std::cout << "(Letras inválidas) La palabra contiene símbolos inválidos." << std::endl;
+        std::cout << "(Letras invalidas) La palabra contiene simbolos invalidos." << std::endl;
         return;
     }
 
