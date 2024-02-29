@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
                            "grafo_de_palabras", "posibles_palabras"};
 
     string input_usuario;
-    vector<string> diccionario;
+    Dictionary diccionario;
     string comando;
     do
     {
@@ -36,11 +36,11 @@ int main(int argc, char *argv[])
         }
         else if (comando == "iniciar_inverso")
         {
-            iniciarInversoFuncion(argumento);
+            iniciarInversoFuncion(argumento, diccionario);
         }
         else if (comando == "puntaje")
         {
-            puntajeFuncion(argumento, diccionario);
+            //puntajeFuncion(argumento, diccionario);
         }
         else if (comando == "iniciar_arbol")
         {
@@ -52,11 +52,11 @@ int main(int argc, char *argv[])
         }
         else if (comando == "palabras_por_prefijo")
         {
-            palabrasporprefijoFuncion(argumento, diccionario);
+           // palabrasporprefijoFuncion(argumento, diccionario);
         }
         else if (comando == "palabras_por_sufijo")
         {
-            palabrasporsufijoFuncion(argumento, diccionario);
+            //palabrasporsufijoFuncion(argumento, diccionario);
         }
         else if (comando == "grafo_de_palabras")
         {
