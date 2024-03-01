@@ -14,7 +14,7 @@ public:
     void addWord(const Word& word);
     void addinverseWords(const Word& word);
     bool IsinverseInitialized() const;
-    void printWords() const; // Nuevo método para imprimir las palabras normales
+    void printWords() const; 
     void printInverseWords() const;
     bool wordExists(const std::string& word) const;
     int getWordScore(const std::string& word) const;
