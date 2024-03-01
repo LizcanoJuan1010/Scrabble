@@ -11,9 +11,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
    
-    string comandos[10] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
+    string comandos[11] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
                            "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
-                           "grafo_de_palabras", "posibles_palabras"};
+                           "grafo_de_palabras", "posibles_palabras", "ayuda"};
     Dictionary dictionary;
     Scrabble scrabble;
     string input_usuario;
@@ -35,49 +35,85 @@ int main(int argc, char *argv[])
        
 
         if (command == "inicializar")
+    {   
+        if(argument.empty())
         {
-            
-            scrabble.initializeFunction(argument,dictionary);
+            cout << "No hay argumento para poder inicializar\n";
         }
-        else if (command == "iniciar_inverso")
+        else
         {
-            scrabble.startInverseFunction(argument,dictionary);
+            scrabble.initializeFunction(argument, dictionary);
         }
-        else if (command == "puntaje")
+    }
+    else if (command == "iniciar_inverso")
+    {
+         if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
+        {
+           scrabble.startInverseFunction(argument, dictionary);
+        }
+        
+    }
+    else if (command == "puntaje")
+    {
+        if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
         {
             scrabble.result(argument, dictionary);
         }
-        else if (command == "iniciar_arbol")
+       
+    }
+    else if (command == "iniciar_arbol")
+    {
+       // iniciararbolFuncion(argumento);
+    }
+    else if (command == "iniciar_arbol_inverso")
+    {
+       // iniciararbolinversoFuncion(argumento);
+    }
+    else if (command == "palabras_por_prefijo")
+    {
+       // palabrasporprefijoFuncion(argumento, dictionary);
+    }
+    else if (command == "palabras_por_sufijo")
+    {
+        // palabrasporsufijoFuncion(argumento, dictionary);
+    }
+    else if (command == "grafo_de_palabras")
+    {
+       // grafodepalabrasFuncion(argumento);
+    }
+    else if (command == "posibles_palabras")
+    {
+        // posiblespalabrasFuncion(argumento);
+    }
+    else if (command == "ayuda")
+    {
+        if (argument.empty())
         {
-           // iniciararbolFuncion(argumento);
+            scrabble.mostrarMenuAyuda();
         }
-        else if (command == "iniciar_arbol_inverso")
-        {
-           // iniciararbolinversoFuncion(argumento);
-        }
-        else if (command == "palabras_por_prefijo")
-        {
-           // palabrasporprefijoFuncion(argumento, dictionary);
-        }
-        else if (command == "palabras_por_sufijo")
-        {
-            //palabrasporsufijoFuncion(argumento, dictionary);
-        }
-        else if (command == "grafo_de_palabras")
-        {
-           // grafodepalabrasFuncion(argumento);
-        }
-        else if (command == "posibles_palabras")
-        {
-            //posiblespalabrasFuncion(argumento);
-        }
-        
         else
         {
-            cout << "Comando inexistente\n";
-        };
-
-    } while (command != "salir");
+            scrabble.help(argument);
+        }
+    }
+    else if (command == "salir")
+    {
+        cout << "\n";
+        // Aquí podrías colocar cualquier lógica de limpieza antes de salir, si es necesario.
+    }
+    else 
+    {
+        cout << "Comando inexistente\n";
+    }
+} while (command != "salir");
 
     return 0;
 }

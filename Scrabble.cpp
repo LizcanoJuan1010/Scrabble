@@ -55,7 +55,7 @@ int Scrabble::getLetterValue(char letter) {
         cout << "Letra " << letter << " no encontrada en el mapa." << endl;
     }
 */
-    cout << "Procesando letra: " << letter << endl; // Debug: muestra la letra procesada
+   
    if (letter == 'A') {
         return 1;
     } else if (letter == 'B') {
@@ -120,6 +120,13 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
         //cout << "File not found." << endl;
         return;
     }
+    
+    file.seekg(0, ios::end); 
+    if (file.tellg() == 0) {
+        cout << "El archivo está vacío." << endl;
+        return;
+    }
+    file.seekg(0, ios::beg);
 
     std::string line;
 
@@ -149,11 +156,15 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
                 
             }
         }
-        dictionary.printWords();
+       
+    } 
+    if (!anywordadded )
+    {
+        cout << "No se encontraron palabras en el archivo." << endl;
     }
-        
-      
-    }
+    
+
+ }
 
 
 void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dictionary) {
@@ -192,30 +203,33 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
             }
             
         }
-        dictionary.printInverseWords();
+       
     }
 }
 
 void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
+    // Convertir la palabra a mayúsculas primero
+    std::string palabraMayusculas;
+    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabraMayusculas),
+                   [](unsigned char c) -> unsigned char { return std::toupper(c); });
 
-
-    if (!std::all_of(palabra.begin(), palabra.end(), [](char c){ return std::isalpha(c); })) {
+    if (!std::all_of(palabraMayusculas.begin(), palabraMayusculas.end(), [](char c){ return std::isalpha(c); })) {
         std::cout << "(Letras invalidas) La palabra contiene simbolos invalidos." << std::endl;
         return;
     }
 
-    if (!dictionary.wordExists(palabra)) {
+    if (!dictionary.wordExists(palabraMayusculas)) {
         std::cout << "(Palabra no existe) La palabra no existe en el diccionario." << std::endl;
         return;
     }
 
     // Asumiendo que necesitas encontrar la palabra en el diccionario para obtener su puntaje:
-    int puntaje = dictionary.getWordScore(palabra); // Este es un método hipotético que necesitarías implementar.
+    int puntaje = dictionary.getWordScore(palabraMayusculas); 
     std::cout << "(Resultado exitoso) La palabra tiene un puntaje de " << puntaje << "." << std::endl;
 }
 
 
-void help(std::string& argument){
+void Scrabble::help(const std::string& argument)const{
 
     if(argument == "inicializar" ){
         cout<<'\t' <<"- $inicializar (Fomato: $inicializar [nombre_archivo]) Descripcion: Inicializa el sistema a partir del archivo, que contiene un diccionario de palabras aceptadas en el idioma ingles." <<endl;
@@ -255,3 +269,19 @@ void help(std::string& argument){
     }
     
     }
+
+
+    void Scrabble::mostrarMenuAyuda() const {
+    cout << "Comandos disponibles:\n";
+    cout << "  inicializar [archivo] - Carga un diccionario desde un archivo.\n";
+    cout << "  iniciar_inverso [archivo] - Función para iniciar algo en modo inverso.\n";
+    cout << "  puntaje [palabra] - Muestra el puntaje de una palabra.\n";
+    cout << "  salir - Sale del programa.\n";
+    cout << "  iniciar_arbol [archivo] - Inicia un árbol con datos del archivo.\n";
+    cout << "  iniciar_arbol_inverso [archivo] - Inicia un árbol en modo inverso.\n";
+    cout << "  palabras_por_prefijo [prefijo] - Muestra palabras con un prefijo dado.\n";
+    cout << "  palabras_por_sufijo [sufijo] - Muestra palabras con un sufijo dado.\n";
+    cout << "  grafo_de_palabras [archivo] - Inicia un grafo de palabras.\n";
+    cout << "  posibles_palabras [letras] - Muestra posibles palabras con las letras dadas.\n";
+    cout << "  ayuda - Muestra este menu de ayuda.\n";
+}
