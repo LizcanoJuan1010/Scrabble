@@ -1,26 +1,27 @@
-#ifndef THREEMAIN.H
-#define THREEMAIN.H
+#ifndef GENERAL_THREE_H
+#define GENERAL_THREE_H
+
+#include "GeneralNode.h"
 
 template <class T>
-class Generalthree {
+class GeneralThree {
 private:
-generalnode<T>* root;
+    GeneralNode<T>* root;
 public:
-Generalthree();
-Generalthree(T& val);
-~Generalthree();
-bool isEmpty();
-Generalnode<T>* getroot();
-void setroot(generalnode<T>* nraiz);
-bool inserternode(T& padre, T& n);
-bool deleternode(T& n);
-bool Search(T& n);
-unsigned int height();
-unsigned int size();
-void preOrder();
-void posOrder();
-void Orderlevel();
+    GeneralThree();
+    GeneralThree(T& val);
+    ~GeneralThree();
+    bool isEmpty();
+    GeneralNode<T>* getRoot();
+    void setRoot(GeneralNode<T>* newRoot);
+    bool insertNode(T& parent, T& nodeValue);
+    bool deleteNode(T& nodeValue);
+    bool search(T& value);
+    unsigned int getHeight();
+    unsigned int getSize();
+    void preOrder();
+    void postOrder();
+    void levelOrder();
 };
 
-
-#endif // THREEMAIN.H
+#endif // GENERAL_THREE_H
