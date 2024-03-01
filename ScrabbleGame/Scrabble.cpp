@@ -272,7 +272,7 @@ void Scrabble::help(const std::string& argument)const{
     }
 
 
-    void Scrabble::mostrarMenuAyuda() const {
+    void Scrabble::ShowHelp() const {
     cout << "Comandos disponibles:\n";
     cout << "  inicializar [archivo] - Carga un diccionario desde un archivo.\n";
     cout << "  iniciar_inverso [archivo] - Función para iniciar algo en modo inverso.\n";

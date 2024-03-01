@@ -20,8 +20,7 @@ public:
     void startInverseFunction(const std::string& filePath, Dictionary& dictionary);
     void result(const std::string& palabra, const Dictionary& dictionary) const ;
     void help(const std::string& argument) const;
-
-    void mostrarMenuAyuda() const;
+    void ShowHelp() const;
 
    
 

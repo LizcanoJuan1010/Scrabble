@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     {
         if (argument.empty())
         {
-            scrabble.mostrarMenuAyuda();
+            scrabble.ShowHelp();
         }
         else
         {
