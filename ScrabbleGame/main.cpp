@@ -114,7 +114,6 @@ int main(int argc, char *argv[])
     else if (command == "salir")
     {
         cout << "\n";
-        // Aquí podrías colocar cualquier lógica de limpieza antes de salir, si es necesario.
     }
     else 
     {
