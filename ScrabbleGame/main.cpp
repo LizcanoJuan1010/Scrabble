@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include "Scrabble.h"
 #include "Dictionary.h"
+#include "GeneralNode.h"
 using namespace std;
 int main(int argc, char *argv[])
 {
@@ -16,15 +17,21 @@ int main(int argc, char *argv[])
                            "grafo_de_palabras", "posibles_palabras", "ayuda"};
     Dictionary dictionary;
     Scrabble scrabble;
-    string input_usuario;
- 
-    string command;
+    string command, input_user;
+
+    GeneralNode<int> root;
+    int childata =2;
+    root.setData(childata);
+    int Descdata = 1;
+    root.addDesc(Descdata);
+
+
     do
     {
         cout << "$";
-        getline(cin, input_usuario);
+        getline(cin, input_user);
 
-        istringstream isstream(input_usuario);
+        istringstream isstream(input_user);
 
        
         isstream >> command;
