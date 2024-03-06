@@ -19,7 +19,7 @@ public:
     bool search(T& value);
     unsigned int getHeight();
     unsigned int getSize();
-    void preOrder();
+    void preOrder(int n);
     void postOrder();
     void levelOrder();
 };

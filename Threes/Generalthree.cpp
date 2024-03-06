@@ -35,7 +35,15 @@ template <class T>
 unsigned int GeneralThree<T>::getSize(){}
 
 template <class T>
-void GeneralThree<T>::preOrder(){}
+void GeneralThree<T>::preOrder(int n){
+    if (n.isLeaf()== NULL || n.isRight() == NULL) 
+    {
+        return;
+    } void GeneralThree<T>::preOrder(int n.isLeaf())
+    
+    void GeneralThree<T>::preOrder(int n.isRight())
+
+}
 
 template <class T>
 void GeneralThree<T>::postOrder(){}
