@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <fstream>
+#include <unordered_map>
+#include <functional>
+#include <cstdlib>
+#include "Scrabble.h"
+#include "Dictionary.h"
+#include <map>
+#include "spdlog/spdlog.h"
+
+using namespace std;
+
+int main(int argc, char *argv[]) {
+    auto logger = spdlog::stdout_logger_mt("logger");
+    string comandos[11] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
+                           "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
+                           "grafo_de_palabras", "posibles_palabras", "ayuda"};
+    Dictionary dictionary;
+    Scrabble scrabble;
+    string command, input_user;
+
+    do {
+        logger->info("$");
+        getline(cin, input_user);
+
+        istringstream isstream(input_user);
+
+        isstream >> command;
+
+        string argument;
+        isstream >> argument;
+
+        if (command == "inicializar") {
+            if (argument.empty()) {
+                logger->error("No hay argumento para poder inicializar");
+            } else {
+                scrabble.initializeFunction(argument, dictionary);
+            }
+        } else if (command == "iniciar_inverso") {
+            if (argument.empty()) {
+                logger->error("No hay argumento para poder iniciar en modo inverso");
+            } else {
+                scrabble.startInverseFunction(argument, dictionary);
+            }
+        } else if (command == "puntaje") {
+            if (argument.empty()) {
+                logger->error("No hay argumento para calcular el puntaje");
+            } else {
+                scrabble.result(argument, dictionary);
+            }
+        } else if (command == "iniciar_arbol") {
+            // iniciararbolFuncion(argumento);
+        } else if (command == "iniciar_arbol_inverso") {
+            // iniciararbolinversoFuncion(argumento);
+        } else if (command == "palabras_por_prefijo") {
+            // palabrasporprefijoFuncion(argumento, dictionary);
+        } else if (command == "palabras_por_sufijo") {
+            // palabrasporsufijoFuncion(argumento, dictionary);
+        } else if (command == "grafo_de_palabras") {
+            // grafodepalabrasFuncion(argumento);
+        } else if (command == "posibles_palabras") {
+            // posiblespalabrasFuncion(argumento);
+        } else if (command == "ayuda") {
+            if (argument.empty()) {
+                scrabble.ShowHelp();
+            } else {
+                scrabble.help(argument);
+            }
+        } else if (command == "salir") {
+            logger->info("");
+        } else {
+            logger->error("Comando inexistente");
+        }
+    } while (command != "salir");
+
+    return 0;
+}

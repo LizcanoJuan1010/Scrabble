@@ -1,0 +1,221 @@
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <fstream>
+#include <unordered_map>
+#include <functional>
+#include <cstdlib>
+#include <cctype> 
+#include <map>
+#include <algorithm>
+#include "Scrabble.h"
+#include "spdlog/spdlog.h"
+
+using namespace std;
+
+Scrabble::Scrabble() {
+    // Configurar el logger
+    spdlog::set_pattern("[%H:%M:%S] [%l] %v");
+    logger = spdlog::stdout_logger_mt("scrabble_logger");
+}
+
+int Scrabble::getLetterValue(char let) {
+    let = toupper(let);
+
+    ifstream flujo("LetterValues.txt", ios::in);
+
+    if (flujo.fail()) {
+        logger->error("Error al abrir el archivo LetterValues.txt");
+        return -1;
+    } else {
+        char letter;
+        int valor = 0;
+        string linea;
+        map<char, int> mapa;
+        while (getline(flujo, linea)) {
+            stringstream ss(linea);
+            ss >> letter;  
+            ss.ignore(); 
+            ss >> valor; 
+
+            if (ss.fail()) {
+                logger->error("Formato de línea no válido en LetterValues.txt: {}", linea);
+            } else {
+                mapa[letter] = valor;
+            }
+        }
+        flujo.close(); 
+
+        for (const auto& entry : mapa) {
+            if(entry.first == let){
+                return entry.second;
+            }
+        }
+    }
+
+    logger->warn("Valor no encontrado para la letra {}", let);
+    return 0;
+}
+
+void Scrabble::initializeFunction(const string& filepath, Dictionary& dictionary) {
+    logger->info("Inicializando desde el archivo: {}", filepath);
+
+    ifstream file(filepath);
+    if (!file.is_open()) {
+        logger->error("Archivo no encontrado: {}", filepath);
+        return;
+    }
+
+    file.seekg(0, ios::end); 
+    if (file.tellg() == 0) {
+        logger->error("El archivo está vacío: {}", filepath);
+        return;
+    }
+    file.seekg(0, ios::beg);
+
+    std::string line;
+    bool anywordadded = false; 
+
+    while (std::getline(file, line)) {
+        std::stringstream lineStream(line); 
+        std::string wordtext;
+
+        while (std::getline(lineStream, wordtext, ',')) {
+            wordtext.erase(0, wordtext.find_first_not_of(" \t\n\r\f\v"));
+            wordtext.erase(wordtext.find_last_not_of(" \t\n\r\f\v") + 1);
+
+            if (!wordtext.empty()) {
+                Word word;
+                std::vector<char> letters(wordtext.begin(), wordtext.end());
+
+                for (char c : letters) {
+                    if (c != '-') {
+                        int value = getLetterValue(c);
+                        Letter letter(c, value);
+                        word.addLetter(letter);
+                    }
+                }
+
+                dictionary.addWord(word);
+                anywordadded = true;
+            }
+        }
+    }
+
+    if (!anywordadded) {
+        logger->info("No se encontraron palabras en el archivo: {}", filepath);
+    }
+}
+
+void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dictionary) {
+    logger->info("Iniciando función inversa desde el archivo: {}", filePath);
+
+    std::ifstream file(filePath);
+    std::string line;
+    bool anywordadded = false;
+
+    if (dictionary.IsinverseInitialized()) {
+        logger->warn("Las palabras inversas ya están inicializadas.");
+        return;
+    }
+
+    if (!file) {
+        logger->error("No se pudo abrir el archivo: {}", filePath);
+        return;
+    }
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string wordText;
+
+        while (getline(ss, wordText, ',')){
+            wordText.erase(0, wordText.find_first_not_of(" \t\n\r\f\v"));
+            wordText.erase(wordText.find_last_not_of(" \t\n\r\f\v") + 1);
+
+            if (!wordText.empty()) {
+                std::reverse(wordText.begin(), wordText.end());
+                Word word;
+
+                for (char c : wordText) {
+                    int value = getLetterValue(c);
+                    word.addLetter(Letter(c, value));
+                }
+
+                dictionary.addinverseWords(word);
+                anywordadded = true;
+            }
+        }
+    }
+
+    if (!anywordadded) {
+        logger->info("No se encontraron palabras inversas en el archivo: {}", filePath);
+    }
+}
+
+void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
+    logger->info("Mostrando resultados para la palabra: {}", palabra);
+
+    std::string palabraMayusculas;
+    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabraMayusculas),
+                   [](unsigned char c) -> unsigned char { return std::toupper(c); });
+
+    if (!std::all_of(palabraMayusculas.begin(), palabraMayusculas.end(), [](char c){ return std::isalpha(c); })) {
+        logger->error("(Letras invalidas) La palabra contiene símbolos inválidos.");
+        return;
+    }
+
+    if (!dictionary.wordExists(palabraMayusculas)) {
+        logger->error("(Palabra no existe) La palabra no existe en el diccionario.");
+        return;
+    }
+
+    int puntaje = dictionary.getWordScore(palabraMayusculas); 
+    logger->info("(Resultado exitoso) La palabra tiene un puntaje de {}.", puntaje);
+}
+
+void Scrabble::help(const std::string& argument) const {
+    logger->info("Mostrando ayuda para el argumento: {}", argument);
+
+    if(argument == "inicializar" ){
+        logger->info("- $inicializar (Formato: $inicializar [nombre_archivo]) Descripcion: Inicializa el sistema a partir del archivo,
+que contiene un diccionario de palabras aceptadas en el idioma inglés.");
+    } else if(argument == "inicializar_inverso"){
+        logger->info("- $inicializar_inverso (Formato: $iniciar_inverso [nombre_archivo]) Descripcion: Inicializa el sistema a partir del archivo que contiene un diccionario de palabras aceptadas en el idioma inglés. A diferencia del comando inicializar, este almacena las palabras en sentido inverso (leídas de derecha a izquierda).");
+    } else if(argument == "puntaje"){
+        logger->info("- $puntaje (Formato: $puntaje [palabra]) Descripcion: El comando permite conocer la puntuación que puede obtenerse con una palabra dada, de acuerdo a la tabla de puntuación de cada letra presentada anteriormente.");
+    } else if(argument == "iniciar_arbol"){
+        logger->info("- $iniciar_arbol (Formato: $iniciar_arbol [archivo]) Descripcion: Inicializa el sistema a partir del archivo diccionario.txt, que contiene un diccionario de palabras aceptadas en el idioma inglés (idioma original del juego).");
+    } else if(argument == "iniciar_arbol_inverso "){
+        logger->info("- $iniciar_arbol_inverso (Formato: $iniciar_arbol_inverso [archivo]) Descripcion: Inicializa el sistema a partir del archivo diccionario.txt, que contiene un diccionario de palabras aceptadas en el idioma inglés (idioma original del juego). A diferencia de los comandos iniciar_inverso e iniciar_arbol, este comando almacena las palabras en uno o más árboles de letras, pero en sentido inverso (leídas de derecha a izquierda).");
+    } else if(argument == "palabras_por_prefijo"){
+        logger->info("- $palabras_por_prefijo  (Formato: palabras_por_prefijo [prefijo]) Descripcion: Dado un prefijo de pocas letras, el comando recorre el(los) árbol(es) de letras (construído(s) con el comando iniciar_arbol) para ubicar todas las palabras posibles a construir a partir de ese prefijo.");
+    } else if(argument == "palabras_por_sufijo"){
+        logger->info("- $palabras_por_sufijo  (Formato: $palabras_por_sufijo [sufijo]) Descripcion: Dado un sufijo de pocas letras, el comando recorre el(los) árbol(es) de letras (construído(s) con el comando iniciar_arbol_inverso) para ubicar todas las palabras posibles a construir que terminan con ese sufijo.");
+    } else if(argument == "grafo_de_palabras"){
+        logger->info("- $grafo_de_palabras  (Formato: $grafo_de_palabras) Descripcion: Con las palabras ya almacenadas en el diccionario (luego de ejecutar el comando inicializar), el comando construye un grafo de palabras, en donde cada palabra se conecta a las demás si y sólo si difieren en un única letra (con las demás letras iguales y en las mismas posiciones).");
+    } else if(argument == " posibles_palabras"){
+        logger->info("- $posibles_palabras  (Formato: $posibles_palabras [letras]) Descripcion: Dadas ciertas letras en una cadena de caracteres (sin importar su orden), el comando debe presentar en pantalla todas las posibles palabras válidas a construir, indicando la longitud de cada una y la puntuación que se puede obtener con cada una.");
+    } else if(argument == "salir"){
+        logger->info("- $salir (Formato: $salir) Descripcion: Termina la ejecución de la aplicación.");
+    } else if(argument == "ayuda"){
+        logger->info("- $ayuda (Formato: $ayuda nombre_comando)");
+    } else {
+        logger->info("Comando {} no conocido :(", argument);
+    }
+}
+
+void Scrabble::ShowHelp() const {
+    logger->info("Mostrando comandos disponibles");
+
+    logger->info("  inicializar [archivo] - Carga un diccionario desde un archivo.");
+    logger->info("  iniciar_inverso [archivo] - Función para iniciar algo en modo inverso.");
+    logger->info("  puntaje [palabra] - Muestra el puntaje de una palabra.");
+    logger->info("  salir - Sale del programa.");
+    logger->info("  iniciar_arbol [archivo] - Inicia un árbol con datos del archivo.");
+    logger->info("  iniciar_arbol_inverso [archivo] - Inicia un árbol en modo inverso.");
+    logger->info("  palabras_por_prefijo [prefijo] - Muestra palabras con un prefijo dado.");
+    logger->info("  palabras_por_sufijo [sufijo] - Muestra palabras con un sufijo dado.");
+    logger->info("  grafo_de_palabras [archivo] - Inicia un grafo de palabras.");
+    logger->info("  posibles_palabras [letras] - Muestra posibles palabras con las letras dadas.");
+    logger->info("  ayuda - Muestra este menú de ayuda.");
+}

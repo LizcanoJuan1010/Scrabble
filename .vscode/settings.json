@@ -6,6 +6,7 @@
         "istream": "cpp",
         "fstream": "cpp",
         "iosfwd": "cpp",
+<<<<<<< HEAD
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -13,10 +14,27 @@
         "clocale": "cpp",
         "cmath": "cpp",
         "cstdarg": "cpp",
+=======
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "array": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+>>>>>>> 506bb3330c7579c909cb21764e25e10f137320e6
         "cstddef": "cpp",
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
+<<<<<<< HEAD
         "cstring": "cpp",
         "ctime": "cpp",
         "cwchar": "cpp",
@@ -24,6 +42,10 @@
         "deque": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
+=======
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+>>>>>>> 506bb3330c7579c909cb21764e25e10f137320e6
         "exception": "cpp",
         "algorithm": "cpp",
         "functional": "cpp",
@@ -31,8 +53,14 @@
         "memory": "cpp",
         "memory_resource": "cpp",
         "numeric": "cpp",
+<<<<<<< HEAD
         "random": "cpp",
         "string": "cpp",
+=======
+        "optional": "cpp",
+        "random": "cpp",
+        "string_view": "cpp",
+>>>>>>> 506bb3330c7579c909cb21764e25e10f137320e6
         "system_error": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
@@ -40,6 +68,10 @@
         "initializer_list": "cpp",
         "limits": "cpp",
         "new": "cpp",
+<<<<<<< HEAD
+=======
+        "numbers": "cpp",
+>>>>>>> 506bb3330c7579c909cb21764e25e10f137320e6
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
