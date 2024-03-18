@@ -1,16 +1,16 @@
-#ifndef GENERAL_THREE_H
-#define GENERAL_THREE_H
+#ifndef GENERAL_TREE_H
+#define GENERAL_TREE_H
 
 #include "GeneralNode.h"
 
 template <class T>
-class GeneralThree {
+class GeneralTree {
 private:
     GeneralNode<T>* root;
 public:
-    GeneralThree();
-    GeneralThree(T& val);
-    ~GeneralThree();
+    GeneralTree();
+    GeneralTree(T& val);
+    ~GeneralTree();
     bool isEmpty();
     GeneralNode<T>* getRoot();
     void setRoot(GeneralNode<T>* newRoot);
@@ -24,4 +24,4 @@ public:
     void levelOrder();
 };
 
-#endif // GENERAL_THREE_H
+#endif // GENERAL_TREE_H

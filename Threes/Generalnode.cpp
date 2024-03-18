@@ -1,19 +1,42 @@
-#include "Generalnode.h"
+#include "GeneralNode.h"
 
-template <class T>
-GeneralNode<T>::GeneralNode(){}
+template<class T>
+GeneralNode<T>::~GeneralNode() {
+    CleanList();
+}
 
-template <class T>
-T& GeneralNode<T>::getData(){}
+template<class T>
+T& GeneralNode<T>::getData() {
+    return data;
+}
 
-template <class T>
-void GeneralNode<T>::setData(T& val){}
+template<class T>
+void GeneralNode<T>::setData(const T& val) {
+    data = val;
+}
 
-template <class T>
-void GeneralNode<T>::CleanList(){}
+template<class T>
+void GeneralNode<T>::CleanList() {
+    for (auto child : desc) {
+        delete child; 
+    }
+    desc.clear(); 
+}
 
-template <class T>
-void GeneralNode<T>::addDesc(T& nval){}
+template<class T>
+void GeneralNode<T>::addDesc(const T& nval) {
+    GeneralNode<T>* newNode = new GeneralNode<T>(nval); 
+    desc.push_back(newNode); 
+}
 
-template <class T>
-void GeneralNode<T>::deleteDesc(T& nval){}
+template<class T>
+void GeneralNode<T>::deleteDesc(const T& val) {
+    for (auto it = desc.begin(); it != desc.end(); ) {
+        if ((*it)->getData() == val) {
+            delete *it; 
+            it = desc.erase(it); 
+        } else {
+            ++it; 
+        }
+    }
+}

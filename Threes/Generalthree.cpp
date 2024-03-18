@@ -1,28 +1,42 @@
-#include "Generalthree.h"
-
-
-template <class T>
-GeneralThree<T>::GeneralThree() {}
-
+#include "GeneralTree.h"
 
 template <class T>
-GeneralThree<T>::GeneralThree(T& val) {
-    
+GeneralTree<T>::GeneralTree() : root(nullptr) {}
+
+template <class T>
+GeneralTree<T>::GeneralTree(T& val) {
+    root = new GeneralNode<T>();
+    root->setData(val);
 }
 
 template <class T>
-bool GeneralThree<T>::isEmpty(){}
+GeneralTree<T>::~GeneralTree() {
+    if (root != nullptr) {
+        delete root;
+    }
+}
 
 template <class T>
-GeneralNode<T>* GeneralThree<T>::getRoot() { return root;}
+bool GeneralTree<T>::isEmpty() {
+    return root == nullptr;
+}
 
 template <class T>
-void GeneralThree<T>::setRoot(GeneralNode<T>* newRoot){}
+GeneralNode<T>* GeneralTree<T>::getRoot() {
+    return root;
+}
 
 template <class T>
-bool GeneralThree<T>::insertNode(T& parent, T& nodeValue){}
+void GeneralTree<T>::setRoot(GeneralNode<T>* newRoot) {
+    root = newRoot;
+}
+
+// Los métodos insertNode, deleteNode, search, getHeight, getSize, preOrder, postOrder, y levelOrder
+// son más complejos y requieren una implementación específica basada en la estructura y necesidades
+// de tu árbol. A continuación, se proporciona un esquema básico para insertNode como ejemplo.
 
 template <class T>
+<<<<<<< Updated upstream
 bool GeneralThree<T>::deleteNode(T& nodeValue){}
 
 template <class T>
@@ -58,5 +72,21 @@ void GeneralThree<T>::levelOrder(){}
 
 
 
+=======
+bool GeneralTree<T>::insertNode(T& parent, T& nodeValue) {
+    if (isEmpty()) {
+        root = new GeneralNode<T>();
+        root->setData(nodeValue);
+        return true;
+    } else {
+        // Esta función necesita ser implementada para buscar el nodo padre adecuado
+        // y luego insertar el nuevo nodo como un descendiente de ese nodo.
+        // Es un proceso que típicamente se hace de manera recursiva.
+        return false; // Placeholder
+    }
+}
+>>>>>>> Stashed changes
 
+// Implementa las otras funciones siguiendo una lógica similar a la de insertNode,
+// ajustándolas a las operaciones específicas que realizan.
 
