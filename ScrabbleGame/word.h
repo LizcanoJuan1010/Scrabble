@@ -12,7 +12,7 @@ public:
     Word();
     void addLetter(Letter letter);
     int calculateScore() const;
-    std::string toString() const; //get the word as a string
+    std::string toString() const; 
 };
 
 #endif // WORD_H

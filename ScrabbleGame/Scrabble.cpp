@@ -109,7 +109,7 @@ int Scrabble::getLetterValue(char letter) {
     } else if (letter == 'Z') {
         return 10;
     }
-    // Si la letra no está en las condiciones anteriores, devolver 0
+
     return 0;
 }
 
@@ -130,10 +130,10 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
 
     std::string line;
 
-    bool anywordadded = false; // Flag to indicate if any word was added to the dictionary
+    bool anywordadded = false; 
 
     while (std::getline(file, line)) {
-        std::stringstream lineStream(line); // Create a stringstream from the line
+        std::stringstream lineStream(line); 
         std:: string wordtext;
 
         while (std::getline(lineStream, wordtext, ',')) {
@@ -145,7 +145,7 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
                 std::vector<char> letters(wordtext.begin(), wordtext.end());
                 for (char c : letters) {
                     if (c != '-') {
-                        int value = getLetterValue(c); // Usa la función para obtener el valor de la letra.
+                        int value = getLetterValue(c); 
                         Letter letter(c, value);
                         //this->letters.push_back(letter);
                          word.addLetter(letter);
@@ -179,7 +179,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
     }
 
     if (!file) {
-    //toca mostrar en pantalla que no existe el archivo pero sin cout, con loggers eso dijo el profe
+ 
     return;
     }  
 
@@ -194,7 +194,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
                 std::reverse(wordText.begin(), wordText.end());
                 Word word;
                 for (char c : wordText) {
-                    int value = getLetterValue(c); // Asume que esta función retorna el valor correcto de cada letra
+                    int value = getLetterValue(c); 
                     word.addLetter(Letter(c, value));
                     
                 }
@@ -209,7 +209,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
 }
 
 void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
-    // Convertir la palabra a mayúsculas primero
+  
     std::string palabraMayusculas;
     std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabraMayusculas),
                    [](unsigned char c) -> unsigned char { return std::toupper(c); });
@@ -224,7 +224,7 @@ void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) 
         return;
     }
 
-    // Asumiendo que necesitas encontrar la palabra en el diccionario para obtener su puntaje:
+    
     int puntaje = dictionary.getWordScore(palabraMayusculas); 
     std::cout << "(Resultado exitoso) La palabra tiene un puntaje de " << puntaje << "." << std::endl;
 }

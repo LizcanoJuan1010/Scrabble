@@ -1,40 +1,26 @@
-#ifndef GENERALNODE_H // Corregir la directiva del preprocesador
+#ifndef GENERALNODE_H
 #define GENERALNODE_H
 
-#include <list> // Asegurar la inclusión de la biblioteca para std::list
+#include <list>
 
 template<class T>
-class GeneralNode { // Normalizar la nomenclatura
+class GeneralNode {
 protected:
     T data;
-    std::list<GeneralNode<T>*> desc; // Corregir el tipo de los elementos de la lista
+    std::list<GeneralNode<T>*> desc;
 
 public:
-    GeneralNode() {} // Constructor por defecto
+    GeneralNode() : data(T()) {} 
+    GeneralNode(T val) : data(val) {} 
 
-    ~GeneralNode() { // Destructor
-        CleanList();
-    }
+    ~GeneralNode();
 
-    T& getData() {
-       
-    }
+    T& getData();
+    void setData(const T& val);
 
-    void setData(T& val) {
-      
-    }
-
-    void CleanList() {
-    
-    }
-
-    void addDesc(T& nval) {
-       
-    }
-
-    void deleteDesc(T& val) {
-       
-    }
+    void CleanList();
+    void addDesc(const T& nval);
+    void deleteDesc(const T& val);
 };
 
 #endif // GENERALNODE_H
