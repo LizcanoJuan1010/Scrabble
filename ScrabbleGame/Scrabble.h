@@ -4,7 +4,7 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include "Dictionary.h" 
+#include "Dictionary.h" // Si el archivo real se llama así
 
 class Scrabble {
 private:
