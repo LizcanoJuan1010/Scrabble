@@ -1,6 +1,8 @@
 #include "Dictionary.h"
 #include <iostream>
 #include <algorithm>
+
+
 Dictionary::Dictionary() {}
 
 void Dictionary::addWord(const Word& word) {

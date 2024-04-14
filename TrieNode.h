@@ -4,14 +4,14 @@
 
 
 class TrieNode {
-private:
-   TrieNode * children[26];
+
+public:
+
+    TrieNode * children[26];
 
     bool end_of_word;
 
     char letter;
-
-public:
 
     TrieNode();
     

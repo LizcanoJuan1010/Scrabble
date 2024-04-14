@@ -10,8 +10,7 @@
 #include <map>
 
 using namespace std;
-int main(int argc, char *argv[])
-{
+int main() {
    
     string comandos[11] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
                            "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
@@ -73,7 +72,17 @@ int main(int argc, char *argv[])
     }
     else if (command == "iniciar_arbol")
     {
-        scrabble.InitizalizeTrie(argument);
+
+        if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
+        {
+            
+            scrabble.InitizalizeTrie(argument);
+        }
+        
     }
     else if (command == "iniciar_arbol_inverso")
     {

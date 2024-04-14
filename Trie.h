@@ -9,11 +9,10 @@ private:
 
 TrieNode *root;
 
-   
-
 public:
 
-    Trie();
+    Trie(); 
+    ~Trie();
 
     void insert(std::string word);
 
