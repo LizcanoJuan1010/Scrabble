@@ -9,8 +9,8 @@
 
 class Scrabble {
 private:
-    
-    Trie trie;
+
+Trie trie;
 
 public:
 

@@ -69,12 +69,13 @@ void Scrabble::InitizalizeTrie(const string& filePath) {
 
     ifstream file(filePath);
     if (!file.is_open()) {
+        cout << "Archivo no encontrado" << endl;
         return;
     }
 
     file.seekg(0, ios::end); 
     if (file.tellg() == 0) {
-       
+       cout << "Archivo no encontrado" << endl;
         return;
     }
     file.seekg(0, ios::beg);
@@ -83,6 +84,7 @@ void Scrabble::InitizalizeTrie(const string& filePath) {
 
      while (file >> line) {
          if (WordValid(line)) {
+             cout << line << endl;
              trie.insert(line);
          }   
      }

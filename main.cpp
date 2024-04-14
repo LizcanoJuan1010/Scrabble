@@ -1,16 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <fstream>
-#include <unordered_map>
-#include <functional>
-#include <cstdlib>
+
 #include "Scrabble.h"
 #include "Dictionary.h"
-#include <map>
 
 using namespace std;
-int main() {
+int main(int argc, char *argv[]) {
    
     string comandos[11] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
                            "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
@@ -79,7 +75,6 @@ int main() {
         }
         else
         {
-            
             scrabble.InitizalizeTrie(argument);
         }
         

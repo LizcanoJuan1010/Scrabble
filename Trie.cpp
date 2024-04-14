@@ -15,6 +15,7 @@ Trie::~Trie() {
 }
 
 void Trie::insert(std::string word) {
+    std::cout << "se entro a la funcion insert del arbol" << std::endl;
     TrieNode * current = root;
         for (size_t i = 0; i < word.size(); i++) {
             if (current->children[word.at(i)-'a'] == NULL) {
