@@ -81,7 +81,15 @@ int main(int argc, char *argv[]) {
     }
     else if (command == "iniciar_arbol_inverso")
     {
-       // iniciararbolinversoFuncion(argumento);
+        if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
+        {
+            std::cout << "holaaa\n";
+            scrabble.InitizalizeTrieInverse(argument);
+        }
     }
     else if (command == "palabras_por_prefijo")
     {

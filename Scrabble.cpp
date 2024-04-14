@@ -10,8 +10,8 @@
 #include <algorithm>
 #include "Scrabble.h"
 #include <cctype> 
-using namespace std;
 
+using namespace std;
 
     Scrabble::Scrabble() {
     
@@ -64,18 +64,51 @@ bool Scrabble::WordValid(const string& Word) const {
     return true; 
 }
 
+
+void Scrabble::InitizalizeTrieInverse(const string& filePath) {
+
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        return;
+    }
+
+    file.seekg(0, ios::end);
+    if (file.tellg() == 0) {
+        return;
+    }
+    file.seekg(0, ios::beg);
+    std::string line;
+
+    while (file >> line)
+    {
+        if (WordValid(line))
+        {
+            int aux = line.length();
+            for (int i = 0; i < aux/2; i++)
+            {
+                swap(line[i], line[aux-i-1]);
+            }
+           
+            trie_inverse.insert(line);
+        }
+    }
+    
+    
+    file.close();
+
+}
+
 void Scrabble::InitizalizeTrie(const string& filePath) {
     
 
     ifstream file(filePath);
     if (!file.is_open()) {
-        cout << "Archivo no encontrado" << endl;
+       
         return;
     }
 
     file.seekg(0, ios::end); 
     if (file.tellg() == 0) {
-       cout << "Archivo no encontrado" << endl;
         return;
     }
     file.seekg(0, ios::beg);
@@ -84,7 +117,6 @@ void Scrabble::InitizalizeTrie(const string& filePath) {
 
      while (file >> line) {
          if (WordValid(line)) {
-             cout << line << endl;
              trie.insert(line);
          }   
      }

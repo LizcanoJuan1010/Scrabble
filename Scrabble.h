@@ -12,6 +12,7 @@ class Scrabble {
 private:
 
 Trie trie;
+Trie trie_inverse;
 
 public:
 
@@ -24,6 +25,7 @@ public:
     void help(const std::string& argument) const;
     void ShowHelp() const;
     void InitizalizeTrie(const std::string& filePath);
+    void InitizalizeTrieInverse(const std::string& filePath);
     bool WordValid(const std::string& palabra) const;
    
 

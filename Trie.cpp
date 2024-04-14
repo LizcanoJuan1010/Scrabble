@@ -5,12 +5,11 @@
 
 
 void Trie::insert(std::string word) {
-    std::cout << word << std::endl;
+
     TrieNode * current = &root;
         for (size_t i = 0; i < word.size(); i++) {
             if (current->children[word.at(i)-'a'] == NULL) {
                 current->children[word.at(i)-'a'] = new TrieNode;
-                std::cout << word.at(i) << std::endl;
                 current->children[word.at(i)-'a']->letter = word.at(i);
             }
             current = current->children[word.at(i)-'a'];
