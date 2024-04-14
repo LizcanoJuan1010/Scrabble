@@ -3,23 +3,14 @@
 #include <iostream>
 
 
-Trie::Trie() {
-    this->root = NULL;
-}
-
-Trie::~Trie() {
-    if (this->root != NULL){
-        delete this->root;
-        this->root = NULL;
-    }
-}
 
 void Trie::insert(std::string word) {
-    std::cout << "se entro a la funcion insert del arbol" << std::endl;
-    TrieNode * current = root;
+    std::cout << word << std::endl;
+    TrieNode * current = &root;
         for (size_t i = 0; i < word.size(); i++) {
             if (current->children[word.at(i)-'a'] == NULL) {
                 current->children[word.at(i)-'a'] = new TrieNode;
+                std::cout << word.at(i) << std::endl;
                 current->children[word.at(i)-'a']->letter = word.at(i);
             }
             current = current->children[word.at(i)-'a'];
@@ -29,7 +20,7 @@ void Trie::insert(std::string word) {
 
 
 TrieNode * Trie::search (std::string Word) {
-        TrieNode * current = root;
+        TrieNode * current = &root;
         for (size_t i = 0; i < Word.size(); i++) {
             if (current->children[Word.at(i)-'a']) {
                 current = current->children[Word.at(i)-'a'];

@@ -7,12 +7,9 @@
 class Trie {
 private:
 
-TrieNode *root;
+TrieNode root;
 
 public:
-
-    Trie(); 
-    ~Trie();
 
     void insert(std::string word);
 

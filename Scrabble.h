@@ -6,6 +6,7 @@
 #include <vector>
 #include "Dictionary.h" // Si el archivo real se llama así
 #include "Trie.h"
+#include <unordered_map>
 
 class Scrabble {
 private:
