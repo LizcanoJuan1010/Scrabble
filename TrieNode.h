@@ -1,7 +1,6 @@
 #ifndef TRIENODE_H
 #define TRIENODE_H
 
-#include "letter"
 
 
 class TrieNode {
@@ -17,7 +16,7 @@ public:
     TrieNode();
     
 
-}
+};
 
 
 

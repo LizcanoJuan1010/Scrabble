@@ -1,6 +1,8 @@
 #include "Trie.h"
 #include <string>
 #include <iostream>
+
+
 void Trie::insert(std::string word) {
     TrieNode * current = &root;
         for (size_t i = 0; i < str.size(); i++) {

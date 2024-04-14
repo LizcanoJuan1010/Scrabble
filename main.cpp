@@ -8,7 +8,7 @@
 #include "Scrabble.h"
 #include "Dictionary.h"
 #include <map>
-//#include "GeneralNode.h"
+
 using namespace std;
 int main(int argc, char *argv[])
 {
@@ -20,12 +20,6 @@ int main(int argc, char *argv[])
     Scrabble scrabble;
     string command, input_user;
 
-  /*  GeneralNode<int> root;
-    int childata =2;
-    root.setData(childata);
-    int Descdata = 1;
-    root.addDesc(Descdata);
-*/
 
     do
     {
@@ -79,7 +73,7 @@ int main(int argc, char *argv[])
     }
     else if (command == "iniciar_arbol")
     {
-       // iniciararbolFuncion(argumento);
+        scrabble.InitizalizeTrie(argument);
     }
     else if (command == "iniciar_arbol_inverso")
     {

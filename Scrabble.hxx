@@ -9,6 +9,7 @@
 #include <map>
 #include <algorithm>
 #include "Scrabble.h"
+#include <cctype> 
 using namespace std;
 
 
@@ -51,6 +52,42 @@ int Scrabble::getLetterValue(char let) {
 
   
     return 0;
+}
+
+bool Scrabble::WordValid(const string& Word) const {
+
+    for (char c : Word) {
+        if (!std::isalpha(static_cast<unsigned char>(c))) {  
+            return false;  
+        }
+    }
+    return true; 
+}
+
+void Scrabble::InitizalizeTrie(const string& filePath) {
+    
+
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        return;
+    }
+
+    file.seekg(0, ios::end); 
+    if (file.tellg() == 0) {
+       
+        return;
+    }
+    file.seekg(0, ios::beg);
+
+     std::string line;
+
+     while (file >> line) {
+         if (WordValid(line)) {
+             trie.insert(line);
+         }   
+     }
+
+     file.close();
 }
 
 void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary) {

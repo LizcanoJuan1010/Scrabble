@@ -2,6 +2,7 @@
 #define TRIE_H
 
 #include "TrieNode.h"
+#include <string>
 
 class Trie {
 private:
@@ -17,8 +18,8 @@ public:
     void insert(std::string word);
 
     TrieNode *search(std::string word);
-    void PrintLexical(TrieNode *current, std::String prefix, std::string suffix);
-}
+    void PrintLexical(TrieNode *current, std::string prefix, std::string suffix);
+};
 
 
 
