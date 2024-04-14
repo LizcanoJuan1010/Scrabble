@@ -89,4 +89,3 @@ bool GeneralTree<T>::insertNode(T& parent, T& nodeValue) {
 
 // Implementa las otras funciones siguiendo una lógica similar a la de insertNode,
 // ajustándolas a las operaciones específicas que realizan.
-

@@ -1,2 +1,0 @@
-# Scrabble
-Data Structures Proyect

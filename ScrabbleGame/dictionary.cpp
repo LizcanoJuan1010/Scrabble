@@ -9,11 +9,11 @@ void Dictionary::addWord(const Word& word) {
 
 
   void Dictionary::addinverseWords(const Word& word) {
-    inverseWords.push_back(word); 
+    inverseWords.push_back(word);
 }
 
 bool Dictionary::IsinverseInitialized() const {
-    return !inverseWords.empty(); 
+    return !inverseWords.empty();
 }
 
 void Dictionary::printWords() const {
@@ -24,7 +24,7 @@ void Dictionary::printWords() const {
 
 void Dictionary::printInverseWords() const {
     for (const Word& word : inverseWords) {
-        std::cout << word.toString() << std::endl; 
+        std::cout << word.toString() << std::endl;
     }
 
 }
