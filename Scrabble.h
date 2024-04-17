@@ -3,17 +3,40 @@
 
 #include <string>
 #include <functional>
+#include <vector>
+#include "Dictionary.h" // Si el archivo real se llama así
+#include "Trie.h"
+#include <unordered_map>
 
-void inicializarFuncion(const std::string& argumento);
-void iniciarInversoFuncion(const std::string& argumento);
-void puntajeFuncion(const std::string& argumento);
-void exitfuncion(const std::string& argumento);
-void iniciararbolFuncion(const std::string& argumento);
-void iniciararbolinversoFuncion(const std::string& argumento);
-void palabrasporprefijoFuncion(const std::string& argumento);
-void palabrasporsufijoFuncion(const std::string& argumento);
-void grafodepalabrasFuncion(const std::string& argumento);
-void posiblespalabrasFuncion(const std::string& argumento);
+class Scrabble {
+private:
+
+Trie trie;
+Trie trie_inverse;
+
+public:
+
+    Scrabble();
+     std::unordered_map<char, int> letterValues;
+    int getLetterValue(char letter);
+    void initializeFunction(const std::string& filepath, Dictionary& dictionary);
+    void startInverseFunction(const std::string& filePath, Dictionary& dictionary);
+    void result(const std::string& palabra, const Dictionary& dictionary) const ;
+    void help(const std::string& argument) const;
+    void ShowHelp() const;
+    void InitizalizeTrie(const std::string& filePath);
+    void InitizalizeTrieInverse(const std::string& filePath);
+    bool WordValid(const std::string& palabra) const;
+    void palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary);
+    void palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary);
+    void mostrarPalabrasNodo(TrieNode* node, const std::string& currentWord, const Dictionary& dictionary);
+    void mostrarPalabrasInv(TrieNode* node, const std::string& currentWord, const Dictionary& dictionary); 
+
+};
+
+
+
+
+
 
 #endif 
-
