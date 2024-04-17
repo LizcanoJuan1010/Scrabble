@@ -93,17 +93,16 @@ int main(int argc, char *argv[]) {
     }
     else if (command == "palabras_por_prefijo")
     {
-       iss >> argument;
-            if (argument.empty()) {
-                std::cout << "Por favor, proporcione un prefijo para buscar." << std::endl;
+      if (argument.empty()) {
+                cout << "Por favor, proporcione un prefijo para buscar." << std::endl;
             } else {
-                scrabble.palabras_por_prefijo(argument, dictionary);}
+                scrabble.palabras_por_prefijo(argument, dictionary);
+            }
     }
     else if (command == "palabras_por_sufijo")
     {
-       iss >> argument;
-            if (argument.empty()) {
-                std::cout << "Por favor, proporcione un sufijo para buscar." << std::endl;
+       if (argument.empty()) {
+                cout << "Por favor, proporcione un sufijo para buscar." << std::endl;
             } else {
                 scrabble.palabras_por_sufijo(argument, dictionary);
             }
