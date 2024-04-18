@@ -27,8 +27,9 @@ public:
     void InitizalizeTrie(const std::string& filePath);
     void InitizalizeTrieInverse(const std::string& filePath);
     bool WordValid(const std::string& palabra) const;
-   
-
+    void palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary);
+    void palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary);
+    
 };
 
 
