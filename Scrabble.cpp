@@ -218,25 +218,28 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
 }
 
 void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
-
-    std::string palabraMayusculas;
-    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabraMayusculas),
-                   [](unsigned char c) -> unsigned char { return std::toupper(c); });
-
-    if (!std::all_of(palabraMayusculas.begin(), palabraMayusculas.end(), [](char c){ return std::isalpha(c); })) {
-        std::cout << "(Letras invalidas) La palabra contiene simbolos invalidos." << std::endl;
+    
+    if (!std::all_of(palabra.begin(), palabra.end(), [](char c){ return std::isalpha(c); })) {
+        std::cout << "(Letras inválidas) La palabra contiene símbolos inválidos." << std::endl;
         return;
     }
 
-    if (!dictionary.wordExists(palabraMayusculas)) {
+    
+    std::string palabra_normalizada;
+    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabra_normalizada),
+                   [](unsigned char c) -> unsigned char { return std::tolower(c); });
+
+    
+    if (!dictionary.wordExists(palabra_normalizada)) {
         std::cout << "(Palabra no existe) La palabra no existe en el diccionario." << std::endl;
         return;
     }
 
-
-    int puntaje = dictionary.getWordScore(palabraMayusculas); 
+   
+    int puntaje = dictionary.getWordScore(palabra_normalizada);
     std::cout << "(Resultado exitoso) La palabra tiene un puntaje de " << puntaje << "." << std::endl;
 }
+
 
 
 void Scrabble::help(const std::string& argument)const{
@@ -294,4 +297,43 @@ void Scrabble::help(const std::string& argument)const{
     cout << "  grafo_de_palabras [archivo] - Inicia un grafo de palabras.\n";
     cout << "  posibles_palabras [letras] - Muestra posibles palabras con las letras dadas.\n";
     cout << "  ayuda - Muestra este menu de ayuda.\n";
+}
+
+void Scrabble::palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary) {
+    TrieNode* start = trie.search(prefijo);  
+    if (!start) {
+        std::cout << "(Prefijo inválido) Prefijo " << prefijo << " no pudo encontrarse en el diccionario." << std::endl;
+    } else {
+        std::cout << "(Resultado exitoso) Las palabras que inician con este prefijo son:" << std::endl;
+        std::vector<std::string> palabras;  
+        std::string palabra_actual = prefijo;  
+        trie.recolectarPalabras(start, palabra_actual, palabras, dictionary);  
+        for (const auto& palabra : palabras) {
+            std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
+        }
+    }
+}
+
+void Scrabble::palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary) {
+    std::string sufijo_invertido(sufijo.rbegin(), sufijo.rend());
+    TrieNode* start = trie_inverse.search(sufijo_invertido);
+
+    if (start == nullptr) {
+        std::cout << "(Sufijo inválido) Sufijo '" << sufijo << "' no pudo encontrarse en el diccionario." << std::endl;
+        return;
+    }
+
+    std::vector<std::string> palabras;
+    trie_inverse.recolectarPalabrasInversas(start, sufijo_invertido, palabras);
+
+    if (palabras.empty()) {
+        std::cout << "No se encontraron palabras que terminen con el sufijo '" << sufijo << "'." << std::endl;
+        return;
+    }
+
+    std::cout << "(Resultado exitoso) Las palabras que terminan con este sufijo son:" << std::endl;
+    for (auto& palabra : palabras) {
+        std::reverse(palabra.begin(), palabra.end());
+        std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
+    }
 }
