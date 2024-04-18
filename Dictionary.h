@@ -20,4 +20,4 @@ public:
     int getWordScore(const std::string& word) const;
 };
 
-#endif 
+#endif // DICTIONARY_H
