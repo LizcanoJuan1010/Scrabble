@@ -93,11 +93,11 @@ int main(int argc, char *argv[]) {
     }
     else if (command == "palabras_por_prefijo")
     {
-       // palabrasporprefijoFuncion(argumento, dictionary);
+        scrabble.palabras_por_prefijo(argument, dictionary);
     }
     else if (command == "palabras_por_sufijo")
     {
-        // palabrasporsufijoFuncion(argumento, dictionary);
+       scrabble.palabras_por_sufijo(argument, dictionary);
     }
     else if (command == "grafo_de_palabras")
     {
