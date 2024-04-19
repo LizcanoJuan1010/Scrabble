@@ -6,118 +6,129 @@
 #include <functional>
 #include <cstdlib>
 #include <cctype> 
+#include <map>
 #include <algorithm>
 #include "Scrabble.h"
-using namespace std;
+#include <cctype> 
 
+using namespace std;
 
     Scrabble::Scrabble() {
     
     }
 
-  /* unordered_map<char, int> letterValues = {
-    {'E', 1}, {'A', 1}, {'I', 1}, {'O', 1}, {'N', 1}, {'R', 1}, {'T', 1}, {'L', 1}, {'S', 1}, {'U', 1},
-    {'D', 2}, {'G', 2},
-    {'B', 3}, {'C', 3}, {'M', 3}, {'P', 3},
-    {'F', 4}, {'H', 4}, {'V', 4}, {'W', 4}, {'Y', 4},
-    {'K', 5},
-    {'J', 8}, {'X', 8},
-    {'Q', 10}, {'Z', 10}
-}; */  
-int Scrabble::getLetterValue(char letter) {
-   // Convertir a mayúscula para manejar uniformemente minúsculas y mayúsculas
-   /* letter = toupper(letter);
-    // Buscar la letra en el mapa y devolver su valor.
-    /*auto it = letterValues.find(letter);
-     cout << "Value: " <<it->first << " Score: " << it->second << endl;
-    if (it != letterValues.end()) {
-        cout << "Value: " <<it->first << " Score: " << it->second << endl;
-        return it->second;
-    }
-    cout << "Value: " <<letterValues[letter] << endl;
-    if (letterValues.find(letter) != letterValues.end()) {
-        cout << "Value: " <<letterValues[letter] << endl;
-        return letterValues[letter];
-    }
-    for (const auto& pair : letterValues) {
-    std::cout << pair.first << " => " << pair.second << '\n';
-    }
-    letter = std::toupper(static_cast<unsigned char>(letter));
+int Scrabble::getLetterValue(char let) {
+    let=toupper(let);
 
-    cout << "Procesando letra: " << letter << endl; // Debug: muestra la letra procesada
+  ifstream flujo("LetterValues.txt", ios::in);
 
-
-    auto it = letterValues.find(letter);
-    if (it != letterValues.end()) {
-        cout << "Valor encontrado para " << it->first << ": " << it->second << endl;
-        return it->second;
+    if (flujo.fail()) {
+        cerr << "Error al abrir el archivo\n";
+        return -1;
     } else {
-        cout << "Letra " << letter << " no encontrada en el mapa." << endl;
-    }
-*/
-   
-   if (letter == 'A') {
-        return 1;
-    } else if (letter == 'B') {
-        return 3;
-    } else if (letter == 'C') {
-        return 3;
-    } else if (letter == 'D') {
-        return 2;
-    } else if (letter == 'E') {
-        return 1;
-    } else if (letter == 'F') {
-        return 4;
-    } else if (letter == 'G') {
-        return 2;
-    } else if (letter == 'H') {
-        return 4;
-    } else if (letter == 'I') {
-        return 1;
-    } else if (letter == 'J') {
-        return 8;
-    } else if (letter == 'K') {
-        return 5;
-    } else if (letter == 'L') {
-        return 1;
-    } else if (letter == 'M') {
-        return 3;
-    } else if (letter == 'N') {
-        return 1;
-    } else if (letter == 'O') {
-        return 1;
-    } else if (letter == 'P') {
-        return 3;
-    } else if (letter == 'Q') {
-        return 10;
-    } else if (letter == 'R') {
-        return 1;
-    } else if (letter == 'S') {
-        return 1;
-    } else if (letter == 'T') {
-        return 1;
-    } else if (letter == 'U') {
-        return 1;
-    } else if (letter == 'V') {
-        return 4;
-    } else if (letter == 'W') {
-        return 4;
-    } else if (letter == 'X') {
-        return 8;
-    } else if (letter == 'Y') {
-        return 4;
-    } else if (letter == 'Z') {
-        return 10;
+        char letter;
+        int valor=0;
+        string linea;
+        map<char, int> mapa;
+        while (getline(flujo, linea)) {
+            stringstream ss(linea);
+            ss >> letter;  
+            ss.ignore(); 
+            ss >> valor; 
+
+            if (ss.fail()) {
+                cerr << "Formato de línea no válido: " << linea << endl;
+            } else {
+                mapa[letter] = valor;
+            }
+        }
+        flujo.close(); 
+        for (const auto& entry : mapa) {
+            if(entry.first== let){
+                return entry.second;
+            }
+        }
     }
 
+  
     return 0;
+}
+
+bool Scrabble::WordValid(const string& Word) const {
+
+    for (char c : Word) {
+        if (!std::isalpha(static_cast<unsigned char>(c))) {  
+            return false;  
+        }
+    }
+    return true; 
+}
+
+
+void Scrabble::InitizalizeTrieInverse(const string& filePath) {
+
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        return;
+    }
+
+    file.seekg(0, ios::end);
+    if (file.tellg() == 0) {
+        return;
+    }
+    file.seekg(0, ios::beg);
+    std::string line;
+
+    while (file >> line)
+    {
+        if (WordValid(line))
+        {
+            int aux = line.length();
+            for (int i = 0; i < aux/2; i++)
+            {
+                swap(line[i], line[aux-i-1]);
+            }
+           
+            trie_inverse.insert(line);
+        }
+    }
+    
+    
+    file.close();
+
+}
+
+void Scrabble::InitizalizeTrie(const string& filePath) {
+    
+
+    ifstream file(filePath);
+    if (!file.is_open()) {
+       
+        return;
+    }
+
+    file.seekg(0, ios::end); 
+    if (file.tellg() == 0) {
+        return;
+    }
+    file.seekg(0, ios::beg);
+
+     std::string line;
+
+     while (file >> line) {
+         if (WordValid(line)) {
+             trie.insert(line);
+         }   
+     }
+
+     file.close();
 }
 
 void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary) {
 
     ifstream file(filepath);
     if (!file.is_open()) {
-        //cout << "File not found." << endl;
+        cout << "Archivo no encontrado" << endl;
         return;
     }
     
@@ -131,7 +142,6 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
     std::string line;
 
     bool anywordadded = false; 
-
     while (std::getline(file, line)) {
         std::stringstream lineStream(line); 
         std:: string wordtext;
@@ -145,9 +155,8 @@ void Scrabble::initializeFunction(const string& filepath,Dictionary& dictionary)
                 std::vector<char> letters(wordtext.begin(), wordtext.end());
                 for (char c : letters) {
                     if (c != '-') {
-                        int value = getLetterValue(c); 
+                        int value = getLetterValue(c);
                         Letter letter(c, value);
-                        //this->letters.push_back(letter);
                          word.addLetter(letter);
                     }
                     
@@ -179,7 +188,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
     }
 
     if (!file) {
- 
+    //toca mostrar en pantalla que no existe el archivo pero sin cout, con loggers eso dijo el profe
     return;
     }  
 
@@ -194,7 +203,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
                 std::reverse(wordText.begin(), wordText.end());
                 Word word;
                 for (char c : wordText) {
-                    int value = getLetterValue(c); 
+                    int value = getLetterValue(c);
                     word.addLetter(Letter(c, value));
                     
                 }
@@ -209,25 +218,28 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
 }
 
 void Scrabble::result(const std::string& palabra, const Dictionary& dictionary) const {
-  
-    std::string palabraMayusculas;
-    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabraMayusculas),
-                   [](unsigned char c) -> unsigned char { return std::toupper(c); });
-
-    if (!std::all_of(palabraMayusculas.begin(), palabraMayusculas.end(), [](char c){ return std::isalpha(c); })) {
-        std::cout << "(Letras invalidas) La palabra contiene simbolos invalidos." << std::endl;
-        return;
-    }
-
-    if (!dictionary.wordExists(palabraMayusculas)) {
-        std::cout << "(Palabra no existe) La palabra no existe en el diccionario." << std::endl;
+    
+    if (!std::all_of(palabra.begin(), palabra.end(), [](char c){ return std::isalpha(c); })) {
+        std::cout << "(Letras inválidas) La palabra contiene símbolos inválidos." << std::endl;
         return;
     }
 
     
-    int puntaje = dictionary.getWordScore(palabraMayusculas); 
+    std::string palabra_normalizada;
+    std::transform(palabra.begin(), palabra.end(), std::back_inserter(palabra_normalizada),
+                   [](unsigned char c) -> unsigned char { return std::tolower(c); });
+
+    
+    if (!dictionary.wordExists(palabra_normalizada)) {
+        std::cout << "(Palabra no existe) La palabra no existe en el diccionario." << std::endl;
+        return;
+    }
+
+   
+    int puntaje = dictionary.getWordScore(palabra_normalizada);
     std::cout << "(Resultado exitoso) La palabra tiene un puntaje de " << puntaje << "." << std::endl;
 }
+
 
 
 void Scrabble::help(const std::string& argument)const{
@@ -284,5 +296,44 @@ void Scrabble::help(const std::string& argument)const{
     cout << "  palabras_por_sufijo [sufijo] - Muestra palabras con un sufijo dado.\n";
     cout << "  grafo_de_palabras [archivo] - Inicia un grafo de palabras.\n";
     cout << "  posibles_palabras [letras] - Muestra posibles palabras con las letras dadas.\n";
-    cout << "  ayuda - Muestra este menu de ayuda.\n";
+    cout << "  ayuda - Muestra este menu de ayuda.\n";
+}
+
+void Scrabble::palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary) {
+    TrieNode* start = trie.search(prefijo);  
+    if (!start) {
+        std::cout << "(Prefijo inválido) Prefijo " << prefijo << " no pudo encontrarse en el diccionario." << std::endl;
+    } else {
+        std::cout << "(Resultado exitoso) Las palabras que inician con este prefijo son:" << std::endl;
+        std::vector<std::string> palabras;  
+        std::string palabra_actual = prefijo;  
+        trie.recolectarPalabras(start, palabra_actual, palabras, dictionary);  
+        for (const auto& palabra : palabras) {
+            std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
+        }
+    }
+}
+
+void Scrabble::palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary) {
+    std::string sufijo_invertido(sufijo.rbegin(), sufijo.rend());
+    TrieNode* start = trie_inverse.search(sufijo_invertido);
+
+    if (start == nullptr) {
+        std::cout << "(Sufijo inválido) Sufijo '" << sufijo << "' no pudo encontrarse en el diccionario." << std::endl;
+        return;
+    }
+
+    std::vector<std::string> palabras;
+    trie_inverse.recolectarPalabrasInversas(start, sufijo_invertido, palabras);
+
+    if (palabras.empty()) {
+        std::cout << "No se encontraron palabras que terminen con el sufijo '" << sufijo << "'." << std::endl;
+        return;
+    }
+
+    std::cout << "(Resultado exitoso) Las palabras que terminan con este sufijo son:" << std::endl;
+    for (auto& palabra : palabras) {
+        std::reverse(palabra.begin(), palabra.end());
+        std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
+    }
 }

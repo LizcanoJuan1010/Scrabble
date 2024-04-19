@@ -1,16 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include <fstream>
-#include <unordered_map>
-#include <functional>
-#include <cstdlib>
+
 #include "Scrabble.h"
 #include "Dictionary.h"
-#include "GeneralNode.h"
+
 using namespace std;
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
    
     string comandos[11] = {"inicializar", "iniciar_inverso", "puntaje", "salir", "iniciar_arbol",
                            "iniciar_arbol_inverso", "palabras_por_prefijo", "palabras_por_sufijo",
@@ -18,12 +14,6 @@ int main(int argc, char *argv[])
     Dictionary dictionary;
     Scrabble scrabble;
     string command, input_user;
-
-    GeneralNode<int> root;
-    int childata =2;
-    root.setData(childata);
-    int Descdata = 1;
-    root.addDesc(Descdata);
 
 
     do
@@ -78,19 +68,36 @@ int main(int argc, char *argv[])
     }
     else if (command == "iniciar_arbol")
     {
-       // iniciararbolFuncion(argumento);
+
+        if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
+        {
+            scrabble.InitizalizeTrie(argument);
+        }
+        
     }
     else if (command == "iniciar_arbol_inverso")
     {
-       // iniciararbolinversoFuncion(argumento);
+        if(argument.empty())
+        {
+            cout << "No hay argumento para poder inicializar\n";
+        }
+        else
+        {
+            std::cout << "holaaa\n";
+            scrabble.InitizalizeTrieInverse(argument);
+        }
     }
     else if (command == "palabras_por_prefijo")
     {
-       // palabrasporprefijoFuncion(argumento, dictionary);
+        scrabble.palabras_por_prefijo(argument, dictionary);
     }
     else if (command == "palabras_por_sufijo")
     {
-        // palabrasporsufijoFuncion(argumento, dictionary);
+       scrabble.palabras_por_sufijo(argument, dictionary);
     }
     else if (command == "grafo_de_palabras")
     {
