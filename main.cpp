@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-
+#include "Graph.h"
 #include "Scrabble.h"
 #include "Dictionary.h"
 
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         }
         else
         {
-            std::cout << "holaaa\n";
+            
             scrabble.InitizalizeTrieInverse(argument);
         }
     }
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
     }
     else if (command == "grafo_de_palabras")
     {
-       // grafodepalabrasFuncion(argumento);
+       scrabble.CreateGraph(argument);
     }
     else if (command == "posibles_palabras")
     {

@@ -7,13 +7,14 @@
 #include "Dictionary.h" // Si el archivo real se llama así
 #include "Trie.h"
 #include <unordered_map>
+#include "Graph.h"
 
 class Scrabble {
 private:
 
 Trie trie;
 Trie trie_inverse;
-
+Graph graph;
 public:
 
     Scrabble();
@@ -29,7 +30,7 @@ public:
     bool WordValid(const std::string& palabra) const;
     void palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary);
     void palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary);
-    
+    void CreateGraph(std::string file);
 };
 
 

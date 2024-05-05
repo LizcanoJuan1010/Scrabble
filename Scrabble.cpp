@@ -337,3 +337,14 @@ void Scrabble::palabras_por_sufijo(const std::string& sufijo, const Dictionary& 
         std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
     }
 }
+void Scrabble::CreateGraph(std::string file){
+    this->graph=Graph();
+    this->graph.addListWord(file);
+    this->graph.addMatrixDistance();
+    //char resp;
+    //std::cout<<"\n Desea ver la matriz?S/N\n";
+    //cin>>resp;
+    //if(resp=='S'){
+    //sathis->graph.printMatrix();}
+    std::cout<<"(Resultado exitoso) Grafo construído correctamente.\n";
+}
