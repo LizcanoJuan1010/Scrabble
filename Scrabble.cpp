@@ -348,3 +348,46 @@ void Scrabble::CreateGraph(std::string file){
     //sathis->graph.printMatrix();}
     std::cout<<"(Resultado exitoso) Grafo construído correctamente.\n";
 }
+
+void Scrabble::generarCombinaciones(const std::string& letras, std::string palabraActual, int pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
+    if (pos == letras.size()) {
+        if (dictionary.wordExists(palabraActual)) {
+            posiblesPalabras.insert(palabraActual);
+        }
+        return;
+    }
+
+    if (letras[pos] == '?') {
+        for (char c = 'a'; c <= 'z'; ++c) {
+            generarCombinaciones(letras, palabraActual + c, pos + 1, posiblesPalabras, dictionary);
+        }
+    } else {
+        generarCombinaciones(letras, palabraActual + letras[pos], pos + 1, posiblesPalabras, dictionary);
+    }
+}
+
+// Implementación de la función posibles_palabras
+void Scrabble::posibles_palabras(const std::string& letras, const Dictionary& dictionary) {
+    // Verifica si la cadena contiene caracteres inválidos
+    if (!std::all_of(letras.begin(), letras.end(), [](char c) { return std::isalpha(c) || c == '?'; })) {
+        std::cout << "(Letras inválidas) La cadena letras contiene símbolos inválidos." << std::endl;
+        return;
+    }
+
+    // Almacenar todas las combinaciones posibles de palabras
+    std::unordered_set<std::string> posiblesPalabras;
+
+    // Genera todas las combinaciones posibles
+    generarCombinaciones(letras, "", 0, posiblesPalabras, dictionary);
+
+    // Verificar y mostrar palabras válidas con su longitud y puntuación
+    if (posiblesPalabras.empty()) {
+        std::cout << "(Resultado exitoso) No se encontraron posibles palabras válidas a construir con las letras dadas." << std::endl;
+    } else {
+        std::cout << "(Resultado exitoso) Las posibles palabras a construir con las letras " << letras << " son:" << std::endl;
+        for (const auto& palabra : posiblesPalabras) {
+            int puntuacion = dictionary.getWordScore(palabra);
+            std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << puntuacion << std::endl;
+        }
+    }
+}

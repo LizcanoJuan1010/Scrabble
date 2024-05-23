@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
     }
     else if (command == "posibles_palabras")
     {
-        // posiblespalabrasFuncion(argumento);
+        scrabble.posibles_palabras(argument, dictionary);
     }
     else if (command == "ayuda")
     {
