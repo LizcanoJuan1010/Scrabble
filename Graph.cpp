@@ -7,9 +7,10 @@
 #include <vector>
 
 Graph::Graph() {
-    for (int i = 0; i < 200; ++i) {
-        for (int j = 0; j < 200; ++j) {
-            matrix[i][j] = -1;
+    // Inicializa la matriz con 8 para representar que no hay conexiones al inicio
+    for (int i = 0; i < 500; ++i) {
+        for (int j = 0; j < 500; ++j) {
+            matrix[i][j] = 8;
         }
     }
 }
@@ -87,11 +88,14 @@ void Graph::addListWord(const std::string& filePath) {
                 }
                 addWord(word);
                 anywordadded = true;
+                
             }
         }
     }
     if (!anywordadded) {
         std::cerr << "No se encontraron palabras en el archivo." << std::endl;
+    } else {
+        std::cout << "Palabras añadidas correctamente.\n";
     }
 }
 
@@ -120,9 +124,9 @@ void Graph::addMatrixDistance() {
         index2 = 0;
         for (const Word& w2 : words) {
             if (calculateDistance(w1, w2)) {
-                this->matrix[index1][index2] = 1;
+                this->matrix[index1][index2] = 1; // Conexión entre las palabras
             } else {
-                this->matrix[index1][index2] = 0;  // Asegúrate de que las otras entradas sean 0
+                this->matrix[index1][index2] = 0; // Sin conexión entre las palabras
             }
             index2++;
         }

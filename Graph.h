@@ -9,7 +9,7 @@
   class Graph {
 private:
     std::list<Word> words;
-    int matrix[200][200];
+    int matrix[500][500];
 
 public:
     Graph();

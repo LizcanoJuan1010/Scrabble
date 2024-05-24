@@ -346,6 +346,7 @@ void Scrabble::CreateGraph(const std::string& filePath) {
 }
 
 
+
 void Scrabble::generarCombinaciones(const std::string& letras, std::string palabraActual, int pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
     if (pos == letras.size()) {
         if (dictionary.wordExists(palabraActual)) {
