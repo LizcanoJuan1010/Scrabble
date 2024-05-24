@@ -337,17 +337,14 @@ void Scrabble::palabras_por_sufijo(const std::string& sufijo, const Dictionary& 
         std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
     }
 }
-void Scrabble::CreateGraph(std::string file){
-    this->graph=Graph();
-    this->graph.addListWord(file);
+void Scrabble::CreateGraph(const std::string& filePath) {
+    this->graph = Graph();
+    this->graph.addListWord(filePath);
     this->graph.addMatrixDistance();
-    //char resp;
-    //std::cout<<"\n Desea ver la matriz?S/N\n";
-    //cin>>resp;
-    //if(resp=='S'){
-    //sathis->graph.printMatrix();}
-    std::cout<<"(Resultado exitoso) Grafo construído correctamente.\n";
+    this->graph.printMatrix();  // Imprimir la matriz para depurar
+    std::cout << "(Resultado exitoso) Grafo construído correctamente.\n";
 }
+
 
 void Scrabble::generarCombinaciones(const std::string& letras, std::string palabraActual, int pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
     if (pos == letras.size()) {

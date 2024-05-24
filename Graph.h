@@ -8,19 +8,17 @@
 #define GREEN   "\033[32m" 
   class Graph {
 private:
-  
-  std::list<Word> words;
+    std::list<Word> words;
+    int matrix[200][200];
 
 public:
-  int matrix[200][200];
-
-  Graph();
-  void addWord(Word word);
-  int getLetterValue(char let);
-  void addListWord(std::string dicctionary);
-  bool calculateDistance(Word word1, Word word2);
-  void addMatrixDistance();
-  void printMatrix();
+    Graph();
+    void addWord(Word word);
+    int getLetterValue(char let);
+    void addListWord(const std::string& filePath);
+    bool calculateDistance(const Word& word1, const Word& word2);
+    void addMatrixDistance();
+    void printMatrix();
 };
 
 #endif

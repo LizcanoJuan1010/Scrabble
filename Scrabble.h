@@ -31,7 +31,7 @@ public:
     bool WordValid(const std::string& palabra) const;
     void palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary);
     void palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary);
-    void CreateGraph(std::string file);
+     void CreateGraph(const std::string& filePath);
     void posibles_palabras(const std::string& letras, const Dictionary& dictionary);
 };
 
