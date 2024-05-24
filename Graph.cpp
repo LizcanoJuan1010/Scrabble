@@ -124,9 +124,9 @@ void Graph::addMatrixDistance() {
         index2 = 0;
         for (const Word& w2 : words) {
             if (calculateDistance(w1, w2)) {
-                this->matrix[index1][index2] = 1; // Conexión entre las palabras
+                this->matrix[index1][index2] = 1; 
             } else {
-                this->matrix[index1][index2] = 0; // Sin conexión entre las palabras
+                this->matrix[index1][index2] = 0; 
             }
             index2++;
         }
