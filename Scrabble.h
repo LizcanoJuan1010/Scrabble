@@ -14,8 +14,7 @@ private:
     Trie trie_inverse;
     Graph graph;
 
-    // Función auxiliar para generar combinaciones
-    void generarCombinaciones(const std::string& letras, std::string palabraActual, int pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary);
+        void generarCombinaciones(const std::string& letras, std::string palabraActual, size_t pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary);
 
 public:
     Scrabble();
@@ -31,8 +30,8 @@ public:
     bool WordValid(const std::string& palabra) const;
     void palabras_por_prefijo(const std::string& prefijo, const Dictionary& dictionary);
     void palabras_por_sufijo(const std::string& sufijo, const Dictionary& dictionary);
-     void CreateGraph(const std::string& filePath);
+    void CreateGraph(const std::string& filePath);
     void posibles_palabras(const std::string& letras, const Dictionary& dictionary);
 };
 
-#endif
+#endif // SCRABBLE_H
