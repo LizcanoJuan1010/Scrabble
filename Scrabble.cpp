@@ -188,7 +188,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
     }
 
     if (!file) {
-    //toca mostrar en pantalla que no existe el archivo pero sin cout, con loggers eso dijo el profe
+    
     return;
     }  
 
@@ -335,5 +335,57 @@ void Scrabble::palabras_por_sufijo(const std::string& sufijo, const Dictionary& 
     for (auto& palabra : palabras) {
         std::reverse(palabra.begin(), palabra.end());
         std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << dictionary.getWordScore(palabra) << std::endl;
+    }
+}
+void Scrabble::CreateGraph(const std::string& filePath) {
+    this->graph = Graph();
+    this->graph.addListWord(filePath);
+    this->graph.addMatrixDistance();
+    this->graph.printMatrix();  
+    std::cout << "(Resultado exitoso) Grafo construído correctamente.\n";
+}
+
+
+
+void Scrabble::generarCombinaciones(const std::string& letras, std::string current, size_t index, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
+    if (index == letras.size()) {
+        if (!current.empty() && dictionary.wordExists(current)) {
+            posiblesPalabras.insert(current);
+        }
+        return;
+    }
+
+    char c = letras[index];
+    if (c == '?') {
+        for (char letter = 'a'; letter <= 'z'; ++letter) {
+            generarCombinaciones(letras, current + letter, index + 1, posiblesPalabras, dictionary);
+        }
+    } else {
+        generarCombinaciones(letras, current + c, index + 1, posiblesPalabras, dictionary);
+    }
+}
+
+void Scrabble::posibles_palabras(const std::string& letras, const Dictionary& dictionary) {
+    
+    if (!std::all_of(letras.begin(), letras.end(), [](char c) { return std::isalpha(c) || c == '?'; })) {
+        std::cout << "(Letras inválidas) La cadena letras contiene símbolos inválidos." << std::endl;
+        return;
+    }
+
+    
+    std::unordered_set<std::string> posiblesPalabras;
+
+   
+    generarCombinaciones(letras, "", 0, posiblesPalabras, dictionary);
+
+    
+    if (posiblesPalabras.empty()) {
+        std::cout << "(Resultado exitoso) No se encontraron posibles palabras válidas a construir con las letras dadas." << std::endl;
+    } else {
+        std::cout << "(Resultado exitoso) Las posibles palabras a construir con las letras " << letras << " son:" << std::endl;
+        for (const auto& palabra : posiblesPalabras) {
+            int puntuacion = dictionary.getWordScore(palabra);
+            std::cout << palabra << " Longitud: " << palabra.length() << ", Puntuación: " << puntuacion << std::endl;
+        }
     }
 }
