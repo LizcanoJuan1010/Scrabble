@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     Scrabble scrabble;
     string command, input_user;
 
-
+Graph graph;
     do
     {
         cout << "$";
@@ -107,6 +107,10 @@ int main(int argc, char *argv[]) {
     {
         scrabble.posibles_palabras(argument, dictionary);
     }
+    else if (command == "ver_matriz")
+    {
+         graph.printMatrix();
+    }
     else if (command == "ayuda")
     {
         if (argument.empty())
@@ -122,6 +126,7 @@ int main(int argc, char *argv[]) {
     {
         cout << "\n";
     }
+     
     else 
     {
         cout << "Comando inexistente\n";
