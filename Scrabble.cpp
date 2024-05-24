@@ -188,7 +188,7 @@ void Scrabble::startInverseFunction(const std::string& filePath, Dictionary& dic
     }
 
     if (!file) {
-    //toca mostrar en pantalla que no existe el archivo pero sin cout, con loggers eso dijo el profe
+    
     return;
     }  
 
@@ -341,44 +341,44 @@ void Scrabble::CreateGraph(const std::string& filePath) {
     this->graph = Graph();
     this->graph.addListWord(filePath);
     this->graph.addMatrixDistance();
-    this->graph.printMatrix();  // Imprimir la matriz para depurar
+    this->graph.printMatrix();  
     std::cout << "(Resultado exitoso) Grafo construído correctamente.\n";
 }
 
 
 
-void Scrabble::generarCombinaciones(const std::string& letras, std::string palabraActual, int pos, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
-    if (pos == letras.size()) {
-        if (dictionary.wordExists(palabraActual)) {
-            posiblesPalabras.insert(palabraActual);
+void Scrabble::generarCombinaciones(const std::string& letras, std::string current, size_t index, std::unordered_set<std::string>& posiblesPalabras, const Dictionary& dictionary) {
+    if (index == letras.size()) {
+        if (!current.empty() && dictionary.wordExists(current)) {
+            posiblesPalabras.insert(current);
         }
         return;
     }
 
-    if (letras[pos] == '?') {
-        for (char c = 'a'; c <= 'z'; ++c) {
-            generarCombinaciones(letras, palabraActual + c, pos + 1, posiblesPalabras, dictionary);
+    char c = letras[index];
+    if (c == '?') {
+        for (char letter = 'a'; letter <= 'z'; ++letter) {
+            generarCombinaciones(letras, current + letter, index + 1, posiblesPalabras, dictionary);
         }
     } else {
-        generarCombinaciones(letras, palabraActual + letras[pos], pos + 1, posiblesPalabras, dictionary);
+        generarCombinaciones(letras, current + c, index + 1, posiblesPalabras, dictionary);
     }
 }
 
-// Implementación de la función posibles_palabras
 void Scrabble::posibles_palabras(const std::string& letras, const Dictionary& dictionary) {
-    // Verifica si la cadena contiene caracteres inválidos
+    
     if (!std::all_of(letras.begin(), letras.end(), [](char c) { return std::isalpha(c) || c == '?'; })) {
         std::cout << "(Letras inválidas) La cadena letras contiene símbolos inválidos." << std::endl;
         return;
     }
 
-    // Almacenar todas las combinaciones posibles de palabras
+    
     std::unordered_set<std::string> posiblesPalabras;
 
-    // Genera todas las combinaciones posibles
+   
     generarCombinaciones(letras, "", 0, posiblesPalabras, dictionary);
 
-    // Verificar y mostrar palabras válidas con su longitud y puntuación
+    
     if (posiblesPalabras.empty()) {
         std::cout << "(Resultado exitoso) No se encontraron posibles palabras válidas a construir con las letras dadas." << std::endl;
     } else {
